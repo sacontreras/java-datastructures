@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sacontreras.datastructures.stack.CLinkedListStack;
-import com.sacontreras.datastructures.stack.CStackOverflowException;
-import com.sacontreras.datastructures.stack.CStackUnderflowException;
+import com.sacontreras.library.datastructures.stack.CLinkedListStack;
+import com.sacontreras.library.datastructures.stack.CStackOverflowException;
+import com.sacontreras.library.datastructures.stack.CStackUnderflowException;
 
 public class Datastructures_CLinkedListStack_Test {
 	@Test

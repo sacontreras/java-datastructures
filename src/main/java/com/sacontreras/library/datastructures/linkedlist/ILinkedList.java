@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.linkedlist;
+package com.sacontreras.library.datastructures.linkedlist;
 
 //based on https://en.wikibooks.org/wiki/Data_Structures/List_Structures
 public interface ILinkedList<TData> extends Iterable<TData> {

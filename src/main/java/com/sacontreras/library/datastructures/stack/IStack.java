@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.stack;
+package com.sacontreras.library.datastructures.stack;
 
 //all stack operations (except for getSize()) of descendants must run in constant time O(1)!
 public interface IStack<TElement> {

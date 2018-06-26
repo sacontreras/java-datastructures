@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.linkedlist;
+package com.sacontreras.library.datastructures.linkedlist;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

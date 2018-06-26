@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.linkedlist;
+package com.sacontreras.library.datastructures.linkedlist;
 
 public class CLinkedListException extends Throwable {
 	public CLinkedListException() {

@@ -1,9 +1,9 @@
 package com.sacontreras.library;
 
-import com.sacontreras.datastructures.stack.CArrayStack;
-import com.sacontreras.datastructures.stack.CLinkedListStack;
-import com.sacontreras.datastructures.stack.CStackOverflowException;
-import com.sacontreras.datastructures.stack.CStackUnderflowException;
+import com.sacontreras.library.datastructures.stack.CArrayStack;
+import com.sacontreras.library.datastructures.stack.CLinkedListStack;
+import com.sacontreras.library.datastructures.stack.CStackOverflowException;
+import com.sacontreras.library.datastructures.stack.CStackUnderflowException;
 
 public class Utils {
 	final public static class Bitwise {
@@ -129,15 +129,6 @@ public class Utils {
 	    	
 	        return new String(c_str);
 	    }
-		
-		final public static String revserseString_using_arraystack(final String str) {
-			return new String(Useful.to_char_array(Useful.to_CArrayStack(str)));
-		}
-		
-		final public static String revserseString_using_linkedliststack(final String str) {
-			return new String(Useful.to_char_array(Useful.to_CLinkedListStack(str)));
-		}
-		
 		
 		final public static class Useful {
 			final public static String bitwise_XOR_swap_chars(final String str) {

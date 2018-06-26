@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.stack;
+package com.sacontreras.library.datastructures.stack;
 
 public class CStackUnderflowException extends CStackException {
 	public CStackUnderflowException() {

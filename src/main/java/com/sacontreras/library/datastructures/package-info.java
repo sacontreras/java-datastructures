@@ -5,4 +5,4 @@
  * @author stevencontreras
  *
  */
-package com.sacontreras.datastructures.stack;
+package com.sacontreras.library.datastructures;

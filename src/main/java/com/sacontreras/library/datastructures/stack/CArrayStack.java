@@ -1,4 +1,4 @@
-package com.sacontreras.datastructures.stack;
+package com.sacontreras.library.datastructures.stack;
 
 import com.sacontreras.library.BoxedType;
 

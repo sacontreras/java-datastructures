@@ -1,8 +1,8 @@
-package com.sacontreras.datastructures.stack;
+package com.sacontreras.library.datastructures.stack;
 
 import java.util.NoSuchElementException;
 
-import com.sacontreras.datastructures.linkedlist.CLinkedList;
+import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
 
 public class CLinkedListStack<TElement> implements IStack<TElement> {
 	
