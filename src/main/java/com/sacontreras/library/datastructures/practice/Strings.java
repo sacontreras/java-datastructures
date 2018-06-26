@@ -1,6 +1,7 @@
 package com.sacontreras.library.datastructures.practice;
 
 import com.sacontreras.library.Utils;
+import com.sacontreras.library.Utils.Bitwise;
 
 public class Strings {
 
@@ -12,7 +13,9 @@ public class Strings {
 		
 		System.out.println(String.format("main: running bitwise_XOR_swap_chars on test_string \"%s\"", str));
 		l_start = System.nanoTime();
-		str_reversed = Utils.Strings.Useful.bitwise_XOR_swap_chars(str);
+		char[] c_str = str.toCharArray();
+		char[] c_str_reversed = Utils.Strings.bitwise_swap_chars(c_str, Bitwise.OPERATION.XOR);
+		str_reversed = new String(c_str_reversed);
 		l_end = System.nanoTime();
 		System.out.println(String.format("main: bitwise_XOR_swap_chars - test_string: \"%s\", test_string_after: \"%s\"; duration: %d ns", str, str_reversed, (l_end - l_start)));
 		System.out.println("");

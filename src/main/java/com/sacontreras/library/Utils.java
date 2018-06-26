@@ -35,10 +35,10 @@ public class Utils {
 	}
 	
 	final public static class Strings {
-		final public static String bitwise_swap_chars(final String str, final Bitwise.OPERATION op) {
-	    	int start = 0, end = str.length() - 1;
-	    	char[] c_str = str.toCharArray();
-	    	int len_half = str.length()/2;
+		
+		final public static char[] bitwise_swap_chars(final char[] c_str, final Bitwise.OPERATION op) {
+	    	int len_half = c_str.length/2;
+	    	int start = 0, end = c_str.length - 1;
 	    	String s_outln = null;
 //	    	s_outln = String.format(
 //    			"bitwise_swap_chars: str: \"%s\", length: %d - swapping %d char pairs via triple-pass %s technique", 
@@ -51,9 +51,9 @@ public class Utils {
 //	    	System.out.println("");
 	    	
 	    	for (int i = 0; i < len_half; i++) {
-	    		char 
-	    			c_start = c_str[start],
-	    			c_end = c_str[end];
+//	    		char 
+//	    			c_start = c_str[start],
+//	    			c_end = c_str[end];
 //	    		s_outln = String.format(
 //    				"bitwise_swap_chars: i== %d; str[%d]: '%c' (%s); str[%d]: '%c' (%s)", 
 //    				i, 
@@ -66,9 +66,9 @@ public class Utils {
 //				);
 //	    		System.out.println(s_outln);
 	    		
-	    		c_start = c_str[start];
-	    		c_end = c_str[end];
 	    		c_str[start] = (char)Bitwise.bitwise_combine(c_str[start], c_str[end], op);
+//	    		c_start = c_str[start];
+//	    		c_end = c_str[end];
 //	    		s_outln = String.format(
 //    				"bitwise_swap_chars: \t pass %d: str[%d]: '%c' (%s) %s= str[%d]: '%c' (%s) --> str[%d]: '%c' (%s)", 
 //    				1, 
@@ -85,9 +85,9 @@ public class Utils {
 //				);
 //	    		System.out.println(s_outln);
 	    		
-	    		c_start = c_str[start];
-	    		c_end = c_str[end];
 	    		c_str[end] = (char)Bitwise.bitwise_combine(c_str[end], c_str[start], op);
+//	    		c_start = c_str[start];
+//	    		c_end = c_str[end];
 //	    		s_outln = String.format(
 //    				"bitwise_swap_chars: \t pass %d: str[%d]: '%c' (%s) %s= str[%d]: '%c' (%s) --> str[%d]: '%c' (%s)", 
 //    				2, 
@@ -104,9 +104,9 @@ public class Utils {
 //				);
 //	    		System.out.println(s_outln);
 	    		
-	    		c_start = c_str[start];
-	    		c_end = c_str[end];
 	    		c_str[start] = (char)Bitwise.bitwise_combine(c_str[start], c_str[end], op);
+//	    		c_start = c_str[start];
+//	    		c_end = c_str[end];
 //	    		s_outln = String.format(
 //    				"bitwise_swap_chars: \t pass %d: str[%d]: '%c' (%s) %s= str[%d]: '%c' (%s) --> str[%d]: '%c' (%s)", 
 //    				3, 
@@ -127,12 +127,13 @@ public class Utils {
 	    		end--;
 	    	}
 	    	
-	        return new String(c_str);
+	        return c_str;
 	    }
 		
 		final public static class Useful {
 			final public static String bitwise_XOR_swap_chars(final String str) {
-				return Strings.bitwise_swap_chars(str, Bitwise.OPERATION.XOR);
+				char[] c_str = str.toCharArray();
+				return new String(Strings.bitwise_swap_chars(c_str, Bitwise.OPERATION.XOR));
 			}
 			
 			final public static CArrayStack<Character> to_CArrayStack(final String str) {
@@ -197,10 +198,12 @@ public class Utils {
 		
 		final public static class NoUseFound {
 			final public static String bitwise_AND_swap_chars(final String str) {
-				return Strings.bitwise_swap_chars(str, Bitwise.OPERATION.AND);
+				char[] c_str = str.toCharArray();
+				return new String(Strings.bitwise_swap_chars(c_str, Bitwise.OPERATION.AND));
 			}
 			final public static String bitwise_OR_swap_chars(final String str) {
-				return Strings.bitwise_swap_chars(str, Bitwise.OPERATION.OR);
+				char[] c_str = str.toCharArray();
+				return new String(Strings.bitwise_swap_chars(c_str, Bitwise.OPERATION.OR));
 			}
 		}
 	}
