@@ -1,6 +1,7 @@
 package com.sacontreras.library;
 
 import com.sacontreras.datastructures.stack.CArrayStack;
+import com.sacontreras.datastructures.stack.CLinkedListStack;
 import com.sacontreras.datastructures.stack.CStackOverflowException;
 import com.sacontreras.datastructures.stack.CStackUnderflowException;
 
@@ -129,8 +130,12 @@ public class Utils {
 	        return new String(c_str);
 	    }
 		
-		final public static String revserseString_using_stack(final String str) {
+		final public static String revserseString_using_arraystack(final String str) {
 			return new String(Useful.to_char_array(Useful.to_CArrayStack(str)));
+		}
+		
+		final public static String revserseString_using_linkedliststack(final String str) {
+			return new String(Useful.to_char_array(Useful.to_CLinkedListStack(str)));
 		}
 		
 		
@@ -153,6 +158,20 @@ public class Utils {
 				return char_stack;
 			}
 			
+			final public static CLinkedListStack<Character> to_CLinkedListStack(final String str) {
+				CLinkedListStack<Character> char_stack = null;
+				try {
+					char[] c_ary_str = str.toCharArray();
+					char_stack = new CLinkedListStack<Character>();
+					for (int i = 0; i < c_ary_str.length; i++) {
+						char_stack.push(c_ary_str[i]);
+					}
+				} catch (CStackOverflowException e) {
+					e.printStackTrace();
+				}
+				return char_stack;
+			}
+			
 			final public static char[] to_char_array(final CArrayStack<Character> char_stack) {
 				char[] c_ary = null;
 				if (char_stack.getTop() > 0) {
@@ -163,6 +182,22 @@ public class Utils {
 							c_ary[i++] = char_stack.pop();
 					} catch (CStackUnderflowException e) {
 						e.printStackTrace();
+					}
+				}
+				return c_ary;
+			}
+			
+			final public static char[] to_char_array(final CLinkedListStack<Character> char_stack) {
+				char[] c_ary = null;
+				int size = char_stack.getSize();
+				if (size > 0) {
+					try {
+						c_ary = new char[size];
+						int i = 0;
+						while (true)
+							c_ary[i++] = char_stack.pop();
+					} catch (CStackUnderflowException e) {
+						//e.printStackTrace();
 					}
 				}
 				return c_ary;
