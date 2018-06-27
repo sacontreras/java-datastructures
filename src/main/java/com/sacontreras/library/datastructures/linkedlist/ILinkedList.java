@@ -1,12 +1,14 @@
 package com.sacontreras.library.datastructures.linkedlist;
 
+import java.util.Iterator;
+
 //based on https://en.wikibooks.org/wiki/Data_Structures/List_Structures
 public interface ILinkedList<TData> extends Iterable<TData> {
 	//returns the list iterator that represents the first element of the list. runs in O(1) time.
-	//Iterator<TData> iterator();
+	Iterator<TData> getStart();
 	
 	//returns the list iterator that represents one element past the last element in the list. runs in O(1) time.
-	//Iterator<TData> getTail();
+	Iterator<TData> getEnd();
 	
 	//adds a new element at the beginning of a list. runs in O(1) time.
 	void prepend(TData data);
@@ -31,4 +33,8 @@ public interface ILinkedList<TData> extends Iterable<TData> {
 	
 	//assigns a new value to the nth element in the list, counting from 0. runs in O(N) time.
 	void set(int n, TData data) throws CLinkedListException;
+	
+	//for convenience...
+	TData getFirst();
+	TData getLast();
 }

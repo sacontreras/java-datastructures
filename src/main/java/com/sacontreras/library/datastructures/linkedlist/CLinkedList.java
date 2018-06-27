@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 //based on https://en.wikibooks.org/wiki/Data_Structures/List_Structures
-
 public class CLinkedList<TData> implements ILinkedList<TData> {
 	
 	public static class Node<TData> {
@@ -28,10 +27,10 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 			this.next_node = next_node;
 		}
 		
-		public static class NodeIterator<TData> implements Iterator<TData> {
+		public static class DataIterator<TData> implements Iterator<TData> {
 			private Node<TData> _next_node;
 			
-			private NodeIterator(final Node<TData> _next_node) {
+			private DataIterator(final Node<TData> _next_node) {
 				this._next_node = _next_node;
 			}
 
@@ -39,7 +38,7 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 			public boolean hasNext() {
 				return (_next_node != null);
 			}
-
+			
 			//next() accesses data of _next_node, then advances _next_node := _next_node.next_node
 			@Override
 			public TData next() {
@@ -70,21 +69,23 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 	public CLinkedList() {
 	}
 	
-	private Node.NodeIterator<TData> iterator(Node<TData> start_from) {
-		return new Node.NodeIterator<TData>(start_from);
+	private Node.DataIterator<TData> iterator(Node<TData> start_from) {
+		return new Node.DataIterator<TData>(start_from);
 	}
-
+	
 	@Override
-	public Node.NodeIterator<TData> iterator() {
+	public Node.DataIterator<TData> getStart() {
 		return iterator(head);
 	}
 	
-	public Node.NodeIterator<TData> getHead() {
-		return iterator();
+	@Override
+	public Node.DataIterator<TData> iterator() {
+		return getStart();
 	}
 	
-	public Node.NodeIterator<TData> getTail() {
-		return iterator(tail);
+	@Override
+	public Node.DataIterator<TData> getEnd() {
+		return iterator(tail != null ? tail.next_node : tail);
 	}
 	
 	@Override
@@ -100,11 +101,8 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 		if (tail == null)
 			head = tail = new Node<TData>(data);
 		else {
-			Node<TData> current = head;
-			while (current.next_node != null)
-				current = current.next_node;
-			current.next_node = new Node<TData>(data);
-			tail = current.next_node;
+			tail.next_node = new Node<TData>(data);
+			tail = tail.next_node;
 		}
 	}
 
@@ -141,7 +139,7 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 
 	@Override
 	public int getSize() {
-		Node.NodeIterator<TData> it = iterator();
+		Node.DataIterator<TData> it = iterator();
 		int n = 0;
 		while (it.hasNext()) {
 			n++;
@@ -174,5 +172,15 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 	@Override
 	public void set(int n, TData data) throws CLinkedListException {
 		getNode(n).data = data;
+	}
+	
+	@Override
+	public TData getFirst() {
+		return getStart().next();
+	}
+	
+	@Override
+	public TData getLast() {
+		return iterator(tail).next();
 	}
 }

@@ -23,7 +23,7 @@ public class CArrayStack<TElement> implements IStack<TElement> {
 
 	@Override
 	public void push(TElement e) throws CStackOverflowException {
-		if (top == (m_array.length - 1))
+		if (isFull())
 			throw new CStackOverflowException(String.format("top==%d (capacity==%d-1)", top, m_array.length));
 		m_array[++top] = new BoxedType<TElement>(e);
 	}
@@ -50,5 +50,10 @@ public class CArrayStack<TElement> implements IStack<TElement> {
 	@Override
 	public boolean isEmpty() {
 		return top == -1;
+	}
+
+	@Override
+	public boolean isFull() {
+		return (top == (m_array.length - 1));
 	}
 }

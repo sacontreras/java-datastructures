@@ -80,14 +80,14 @@ public class Datastructures_CLinkedList_Test {
 			);
 			
 			c_expect = c_ary_expected[0];
-			c_result = ll.getHead().next();
+			c_result = ll.getFirst();
 			assertEquals(
 				c_expect,
 				c_result
 			);
 			
 			c_expect = c_ary_expected[i];
-			c_result = ll.getTail().next();
+			c_result = ll.getLast();
 			assertEquals(
 				c_expect,
 				c_result
@@ -154,14 +154,14 @@ public class Datastructures_CLinkedList_Test {
 				);
 				
 				c_expect = c_ary_expected[i+1];
-				c_result = ll.getHead().next();
+				c_result = ll.getStart().next();
 				assertEquals(
 					c_expect,
 					c_result
 				);
 				
 				c_expect = c_ary_expected[c_ary_expected.length-1];
-				c_result = ll.getTail().next();
+				c_result = ll.getLast();
 				assertEquals(
 					c_expect,
 					c_result
@@ -207,14 +207,14 @@ public class Datastructures_CLinkedList_Test {
 			);
 			
 			c_expect = c_ary_expected[c_ary_expected.length-1];
-			c_result = ll.getTail().next();
+			c_result = ll.getLast();
 			assertEquals(
 				c_expect,
 				c_result
 			);
 			
 			c_expect = c_ary_expected[i-1];
-			c_result = ll.getHead().next();
+			c_result = ll.getFirst();
 			assertEquals(
 				c_expect,
 				c_result
@@ -253,14 +253,14 @@ public class Datastructures_CLinkedList_Test {
 				);
 				
 				c_expect = c_ary_expected[i-(1 + 1 /*for the one we just removed*/)];
-				c_result = ll.getTail().next();
+				c_result = ll.getLast();
 				assertEquals(
 					c_expect,
 					c_result
 				);
 				
 				c_expect = c_ary_expected[0];
-				c_result = ll.getHead().next();
+				c_result = ll.getFirst();
 				assertEquals(
 					c_expect,
 					c_result

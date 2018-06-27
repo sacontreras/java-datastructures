@@ -12,14 +12,14 @@ public class CLinkedListStack<TElement> implements IStack<TElement> {
 
 	@Override
 	public void push(TElement e) throws CStackOverflowException {
-		ll.append(e);
+		ll.prepend(e);
 	}
 
 	@Override
 	public TElement peek() throws CStackUnderflowException {
 		TElement element = null;
 		try {
-			element = ll.getTail().next();
+			element = ll.getStart().next();
 		} catch (NoSuchElementException e) {
 			throw new CStackUnderflowException();
 		}
@@ -29,7 +29,7 @@ public class CLinkedListStack<TElement> implements IStack<TElement> {
 	@Override
 	public TElement pop() throws CStackUnderflowException {
 		final TElement element = peek();
-		ll.removeLast();
+		ll.removeFirst();;
 		return element;
 	}
 
@@ -40,7 +40,11 @@ public class CLinkedListStack<TElement> implements IStack<TElement> {
 
 	@Override
 	public boolean isEmpty() {
-		return !ll.getHead().hasNext();
+		return !ll.getStart().hasNext();
 	}
 
+	@Override
+	public boolean isFull() {
+		return false;
+	}
 }
