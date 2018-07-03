@@ -1,5 +1,6 @@
 package com.sacontreras.library;
 
+import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
 import com.sacontreras.library.datastructures.stack.CArrayStack;
 import com.sacontreras.library.datastructures.stack.CLinkedListStack;
 import com.sacontreras.library.datastructures.stack.CStackOverflowException;
@@ -206,5 +207,17 @@ public class Utils {
 				return new String(Strings.bitwise_swap_chars(c_str, Bitwise.OPERATION.OR));
 			}
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	final public static <TData> BoxedType<TData>[] to_array(final CLinkedListQueue<TData> queue) {
+		BoxedType<TData>[] tdata_ary = null;
+		int size = queue.getSize();
+		if (size > 0) {
+			tdata_ary = (BoxedType<TData>[])(new BoxedType[size]);
+			for (int i = 0; i < size; i++)
+				tdata_ary[i] = new BoxedType<TData>(queue.poll());
+		}
+		return tdata_ary;
 	}
 }

@@ -3,6 +3,8 @@ package com.sacontreras.library.datastructures.tree;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
+
 public class CBinaryTree<TData> {
 	
 	protected CBinaryTreeNode<TData> root = null;
@@ -68,82 +70,11 @@ public class CBinaryTree<TData> {
 		return height(root);
 	}
 	
-	//in-order successor
-	private static <TData> CBinaryTreeNode<TData> successor(CBinaryTreeNode<TData> root_node) {
-		if (root_node == null)
-	        return null;
-		
-		CBinaryTreeNode<TData> successor = null;
-		if (root_node.right != null) {//in-order line of descendants (successors) of root_node is in its right sub-tree
-			successor = root_node.right;	//but there may be another successor in between the right-child and right-child's successors
-	        while (successor.left != null)	//which would fall in *first* populated left sub-tree of the right child; so now find first populated left sub-tree...
-	        	successor = successor.left;
-	        return successor;	//successor now refers to first populated left sub-tree; successor value is the supremum (least upper-bound) of root-node's value
-	    } else {//assuming our in-order insert works correctly, root-node's next successor will be the first descendant in its line of parents whose descendant is not root_node
-	    	successor = root_node.parent;
-	    	CBinaryTreeNode<TData> child = root_node;
-	        while (successor != null && child == successor.right) {
-	        	child = successor;
-	        	successor = successor.parent;
-	        }
-	        return successor;
-	    }
-	}
-	
-	public static <TData> Iterator<TData> inOrderIterator(final CBinaryTreeNode<TData> start_from) {
-		return new Iterator<TData>() {
-			private CBinaryTreeNode<TData> _next_node = start_from;
-
-			@Override
-			public boolean hasNext() {
-				return (_next_node != null);
-			}
-
-			@Override
-			public TData next() {
-				if (!hasNext()) 
-					throw new NoSuchElementException();
-				TData data = _next_node.data;
-				_next_node = successor(_next_node);
-			    return data;
-			}
-		};
-	}
-	public Iterator<TData> inOrderIterator() {
-		return inOrderIterator(root);
-	}
-	
-	public Iterator<TData> preOrderIterator() {
-		return null;
-	}
-	
-	public Iterator<TData> postOrderIterator() {
-		return null;
-	}
-	
-	public Iterator<TData> levelOrderIterator() {
-		return null;
-	}
 	
 	
 	
-	
-	public static <TData> void traverseInOrder(CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
-		if (root == null)
-			traversalListener.onNullNode();
-		else {
-			if (root.left != null)
-				traverseInOrder(root.left, traversalListener);
-			traversalListener.onNodeVisted(root.data);
-			if (root.right != null)
-				traverseInOrder(root.right, traversalListener);
-		}
-	}
-	public void traverseInOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
-		traverseInOrder(root, traversalListener);
-	}
-	
-	public static <TData> void traversePreOrder(CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	//traversal: pre-order
+	public static <TData> void traversePreOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
@@ -158,7 +89,159 @@ public class CBinaryTree<TData> {
 		traversePreOrder(root, traversalListener);
 	}
 	
-	public static <TData> void traversePostOrder(CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	private static <TData> CBinaryTreeNode<TData> predecessor_preorder(CBinaryTreeNode<TData> root_node) {
+		return null;
+	}
+	
+	private static <TData> CBinaryTreeNode<TData> successor_preorder(CBinaryTreeNode<TData> root_node) {
+		if (root_node == null)
+	        return null;
+		
+		CBinaryTreeNode<TData> successor = null;
+		if (root_node.left != null)
+			successor = root_node.left;
+	    else {
+	    	if (root_node.right != null)
+	    		successor = root_node.right;
+	    	else {
+	    		CBinaryTreeNode<TData> 
+	    			child = root_node,
+	    			parent = root_node.parent;
+	    		while (parent != null && child == parent.right) {
+	    			child = parent;
+	    			parent = parent.parent;
+	    		}
+	    		if (parent != null)
+    				successor = parent.right;
+	    	}
+	    }
+		return successor;
+	}
+	
+	public static <TData> Iterator<TData> iterator_preorder(final CBinaryTreeNode<TData> start_from) {
+		return new Iterator<TData>() {
+			private CBinaryTreeNode<TData> _next_node = start_from;
+
+			@Override
+			public boolean hasNext() {
+				return (_next_node != null);
+			}
+
+			@Override
+			public TData next() {
+				if (!hasNext()) 
+					throw new NoSuchElementException();
+				TData data = _next_node.data;
+				_next_node = successor_preorder(_next_node);
+			    return data;
+			}
+		};
+	}
+	public Iterator<TData> iterator_preorder() {
+		return iterator_preorder(root);
+	}
+	
+	
+	
+	
+	//traversal: in-order
+	public static <TData> void traverseInOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+		if (root == null)
+			traversalListener.onNullNode();
+		else {
+			if (root.left != null)
+				traverseInOrder(root.left, traversalListener);
+			traversalListener.onNodeVisted(root.data);
+			if (root.right != null)
+				traverseInOrder(root.right, traversalListener);
+		}
+	}
+	public void traverseInOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
+		traverseInOrder(root, traversalListener);
+	}
+	
+	private static <TData> CBinaryTreeNode<TData> predecessor_inorder(CBinaryTreeNode<TData> root_node) {
+		if (root_node == null)
+	        return null;
+		
+//		If its left subtree is not null
+//        Then predecessor will be the right most 
+//        child of left subtree or left child itself.
+		
+		CBinaryTreeNode<TData> predecessor = null;
+		if (root_node.left != null) {
+			predecessor = root_node.left;
+	        while (predecessor.right != null)
+	        	predecessor = predecessor.right;
+	        return predecessor;
+	    } else {
+	    	predecessor = root_node.parent;
+	    	CBinaryTreeNode<TData> child = root_node;
+	        while (predecessor != null && child == predecessor.left) {
+	        	child = predecessor;
+	        	predecessor = predecessor.parent;
+	        }
+	        return predecessor;
+	    }
+	}
+	
+	private static <TData> CBinaryTreeNode<TData> successor_inorder(CBinaryTreeNode<TData> root_node) {
+		if (root_node == null)
+	        return null;
+		
+		CBinaryTreeNode<TData> successor = null;
+		if (root_node.right != null) {//in-order line of descendants (successors) of root_node starts in right sub-tree
+			successor = root_node.right;	//but there may be a "closer" successor in between the right-child
+	        while (successor.left != null)	//which would be the leaf in left sub-tree (if it exists) of the right-child
+	        	successor = successor.left;
+	        return successor;
+	    } else {//since root_node does not contain any descendants in its right sub-tree, we must walk up the line of predecessors which also have successor equal to root_node - we find our successor when we encounter a predecessor with successor (right-child) not equal to root_node 
+	    	successor = root_node.parent;
+	    	CBinaryTreeNode<TData> child = root_node;
+	        while (successor != null && child == successor.right) {
+	        	child = successor;
+	        	successor = successor.parent;
+	        }
+	        return successor;
+	    }
+	}
+	
+	public static <TData> Iterator<TData> iterator_inorder(final CBinaryTreeNode<TData> start_from) {
+		return new Iterator<TData>() {
+			private CBinaryTreeNode<TData> _next_node = start_from;
+
+			@Override
+			public boolean hasNext() {
+				return (_next_node != null);
+			}
+
+			@Override
+			public TData next() {
+				if (!hasNext()) 
+					throw new NoSuchElementException();
+				TData data = _next_node.data;
+				_next_node = successor_inorder(_next_node);
+			    return data;
+			}
+		};
+	}
+	public Iterator<TData> iterator_inorder() {
+		CBinaryTreeNode<TData> 
+			predecessor = root,
+			tmp = predecessor;
+		while (tmp != null) {
+			tmp = predecessor_inorder(tmp);
+			if (tmp != null)
+				predecessor = tmp;
+		}
+		return iterator_inorder(predecessor);	
+	}
+	
+	
+	
+	
+	//traversal: post-order
+	public static <TData> void traversePostOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
@@ -171,5 +254,37 @@ public class CBinaryTree<TData> {
 	}
 	public void traversePostOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
 		traversePostOrder(root, traversalListener);
+	}
+	
+	public Iterator<TData> iterator_postorder() {
+		return null;
+	}
+	
+	
+	
+	
+	//traversal: level-order
+	public static <TData> void traverseLevelOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+		if (root == null)
+			traversalListener.onNullNode();
+		else {
+			CLinkedListQueue<CBinaryTreeNode<TData>> q = new CLinkedListQueue<CBinaryTreeNode<TData>>();	//we use a queue because we want FIFO retrieval
+			q.enqueue(root);
+			while (!q.isEmpty()) {
+				CBinaryTreeNode<TData> node = q.poll();
+				traversalListener.onNodeVisted(node.data);
+				if (node.left != null)
+					q.enqueue(node.left);
+				if (node.right != null)
+					q.enqueue(node.right);
+			}
+		}
+	}
+	public void traverseLevelOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
+		traverseLevelOrder(root, traversalListener);
+	}
+	
+	public Iterator<TData> iterator_levelorder() {
+		return null;
 	}
 }
