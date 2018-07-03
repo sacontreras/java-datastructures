@@ -15,10 +15,10 @@ public class Utils {
 			
 			final public String symbol() {
 				switch (this) {
-				case AND: return "&";
-				case OR: return "|";
-				case XOR: 
-				default: return "^";
+					case AND: return "&";
+					case OR: return "|";
+					case XOR: 
+					default: return "^";
 				}
 			}
 		}
@@ -145,7 +145,7 @@ public class Utils {
 						char_stack.push(c_ary_str[i]);
 					}
 				} catch (CStackOverflowException e) {
-					e.printStackTrace();
+					e.printStackTrace();                    
 				}
 				return char_stack;
 			}
