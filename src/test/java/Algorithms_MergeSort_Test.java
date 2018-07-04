@@ -13,7 +13,6 @@ import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
 import com.sacontreras.library.util.Transform;
 
 public class Algorithms_MergeSort_Test {
-	private class IntegerMergeSort extends MergeSort<Integer> {}
 	
 	private class CIntegerBinarySearchTree extends CBinarySearchTree<Integer> {}
 	
@@ -43,7 +42,7 @@ public class Algorithms_MergeSort_Test {
 		CIntegerBinarySearchTree intBinarySearchTree = new CIntegerBinarySearchTree();
 		
 		//pre-prder amounts to insertion order
-		int[] i_ary_expected_preorder = new int[] {
+		Integer[] i_ary_expected_preorder = new Integer[] {
 			30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50
 		};
 		
@@ -52,7 +51,7 @@ public class Algorithms_MergeSort_Test {
 		
 		//in-order (left, visit, right):
 		//		5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-		int[] i_ary_expected_inorder = new int[] {
+		Integer[] i_ary_expected_inorder = new Integer[] {
 			5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
 		};
 		
@@ -76,11 +75,17 @@ public class Algorithms_MergeSort_Test {
 		}
 		
 		//now sort i_ary_expected_preorder using mergesort and expect i_ary_expected_inorder values
-		IntegerMergeSort mergesort = new IntegerMergeSort();
-		final CLinkedListQueue<Integer> q_expected_preorder = new CLinkedListQueue<Integer>();
-		for (int i = 0; i < i_ary_expected_preorder.length; i++)
-			q_expected_preorder.enqueue(i_ary_expected_preorder[i]);
-		final CLinkedListQueue<Integer> q_expected_preorder__sorted_inorder = mergesort.execute(q_expected_preorder);
+		final Integer[] ary_expected_preorder__sorted_inorder = MergeSort.<Integer>execute(i_ary_expected_preorder);
+		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
+			i_expect = i_ary_expected_inorder[i];
+			i_result = ary_expected_preorder__sorted_inorder[i];
+			assertEquals(
+				i_expect,
+				i_result
+			);
+		}
+		
+		final CLinkedListQueue<Integer> q_expected_preorder__sorted_inorder = MergeSort.<Integer>execute(Transform.to_queue(i_ary_expected_preorder));
 		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
 			i_expect = i_ary_expected_inorder[i];
 			i_result = q_expected_preorder__sorted_inorder.poll();
