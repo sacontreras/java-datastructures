@@ -7,15 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.sacontreras.library.BoxedType;
-import com.sacontreras.library.Utils;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
 import com.sacontreras.library.datastructures.tree.CBinarySearchTree;
 import com.sacontreras.library.datastructures.tree.COrderedBinaryTree;
 import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
+import com.sacontreras.library.util.Transform;
 
 public class Datastructures_CBinarySearchTree_Test {
-	private class CIntegerBinarySearchTree extends CBinarySearchTree<Integer> {
-	}
+	private class CIntegerBinarySearchTree extends CBinarySearchTree<Integer> {}
 	
 	private class CIntegerBinarySearchTreeTraversalListener implements IBinaryTreeTraversalListener<Integer> {
 		private final String order;
@@ -42,7 +41,8 @@ public class Datastructures_CBinarySearchTree_Test {
 	public void test_CBinarySearchTree() {
 		CIntegerBinarySearchTree intBinarySearchTree = new CIntegerBinarySearchTree();
 		
-		int[] i_ary_expected_preorder = new int[]{
+		//pre-prder amounts to insertion order
+		int[] i_ary_expected_preorder = new int[] {
 			30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50
 		};
 		
@@ -51,21 +51,23 @@ public class Datastructures_CBinarySearchTree_Test {
 		
 		//in-order (left, visit, right):
 		//		5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-		int[] i_ary_expected_inorder = new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
+		int[] i_ary_expected_inorder = new int[] {
+			5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
+		};
 		
 		//pre-order traversal
 		CIntegerBinarySearchTreeTraversalListener intBinarySearchTreeTraversalListener = new CIntegerBinarySearchTreeTraversalListener("preOrder");
 		intBinarySearchTree.traversePreOrder(intBinarySearchTreeTraversalListener);
-		BoxedType<Integer>[] boxint_ary = Utils.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
+		Integer[] int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
 		int i_expect = i_ary_expected_preorder.length;
-		int i_result = boxint_ary.length;
+		int i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_preorder.length; i++) {
 			i_expect = i_ary_expected_preorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result
@@ -94,16 +96,16 @@ public class Datastructures_CBinarySearchTree_Test {
 		//in-order traversal
 		intBinarySearchTreeTraversalListener = new CIntegerBinarySearchTreeTraversalListener("inOrder");
 		intBinarySearchTree.traverseInOrder(intBinarySearchTreeTraversalListener);
-		boxint_ary = Utils.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
+		int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
 		i_expect = i_ary_expected_inorder.length;
-		i_result = boxint_ary.length;
+		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
 			i_expect = i_ary_expected_inorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result

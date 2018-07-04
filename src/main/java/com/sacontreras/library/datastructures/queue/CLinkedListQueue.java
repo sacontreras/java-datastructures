@@ -20,12 +20,6 @@ public class CLinkedListQueue<TData> implements IQueue<TData> {
 	public void dequeue() {
 		ll.removeFirst();
 	}
-	
-	public TData poll() {
-		TData data = front();
-		dequeue();
-		return data;
-	}
 
 	@Override
 	public boolean isEmpty() {

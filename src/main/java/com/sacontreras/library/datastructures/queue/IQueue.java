@@ -12,6 +12,12 @@ public interface IQueue<TData> {
 	//removes the item from the front of the queue.
 	void dequeue();
 	
+	default TData poll() {
+		TData data = front();
+		dequeue();
+		return data;
+	}
+	
 	//true if no more items can be dequeued and there is no front item.
 	boolean isEmpty();
 	

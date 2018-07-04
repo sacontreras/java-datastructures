@@ -6,11 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.sacontreras.library.BoxedType;
-import com.sacontreras.library.Utils;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
 import com.sacontreras.library.datastructures.tree.CBinaryTree;
 import com.sacontreras.library.datastructures.tree.CBinaryTreeNode;
 import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
+import com.sacontreras.library.util.Transform;
 
 public class Datastructures_CBinaryTree_Test {
 	
@@ -386,16 +386,16 @@ public class Datastructures_CBinaryTree_Test {
 		//pre-order traversal
 		CIntegerBinaryTreeTraversalListener intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("preOrder");
 		intBinaryTree.traversePreOrder(intBinaryTreeTraversalListener);
-		BoxedType<Integer>[] boxint_ary = Utils.to_array(intBinaryTreeTraversalListener.q_visit_order);
+		Integer[] int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
 		i_expect = i_ary_expected_preorder.length;
-		i_result = boxint_ary.length;
+		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_preorder.length; i++) {
 			i_expect = i_ary_expected_preorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result
@@ -424,16 +424,16 @@ public class Datastructures_CBinaryTree_Test {
 		//in-order traversal
 		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("inOrder");
 		intBinaryTree.traverseInOrder(intBinaryTreeTraversalListener);
-		boxint_ary = Utils.to_array(intBinaryTreeTraversalListener.q_visit_order);
+		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
 		i_expect = i_ary_expected_inorder.length;
-		i_result = boxint_ary.length;
+		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
 			i_expect = i_ary_expected_inorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result
@@ -462,16 +462,16 @@ public class Datastructures_CBinaryTree_Test {
 		//post-order traversal
 		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("postOrder");
 		intBinaryTree.traversePostOrder(intBinaryTreeTraversalListener);
-		boxint_ary = Utils.to_array(intBinaryTreeTraversalListener.q_visit_order);
+		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
 		i_expect = i_ary_expected_postorder.length;
-		i_result = boxint_ary.length;
+		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_postorder.length; i++) {
 			i_expect = i_ary_expected_postorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result
@@ -481,16 +481,16 @@ public class Datastructures_CBinaryTree_Test {
 		//level-order traversal
 		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("levelOrder");
 		intBinaryTree.traverseLevelOrder(intBinaryTreeTraversalListener);
-		boxint_ary = Utils.to_array(intBinaryTreeTraversalListener.q_visit_order);
+		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
 		i_expect = i_ary_expected_levelorder.length;
-		i_result = boxint_ary.length;
+		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		for (int i = 0; i < i_ary_expected_levelorder.length; i++) {
 			i_expect = i_ary_expected_levelorder[i];
-			i_result = boxint_ary[i].getValue();
+			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
 				i_result

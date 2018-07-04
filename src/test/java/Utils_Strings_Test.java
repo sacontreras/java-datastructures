@@ -1,10 +1,9 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sacontreras.library.Utils.Strings.Useful;
+import com.sacontreras.library.util.StringUtils;
+
 
 public class Utils_Strings_Test {
 	
@@ -12,21 +11,14 @@ public class Utils_Strings_Test {
 	@DisplayName("test_bitwise_XOR_swap_chars")
     public void test_bitwise_XOR_swap_chars() {
         String 
-        	test_string = "Hello World!", 
-        	result_string__expect = "!dlroW olleH";
-        
-//        assertTrue(
-//    		result_string__expect.compareTo(Useful.bitwise_XOR_swap_chars(test_string)) == 0, 
-//			String.format("Utils.Strings.Useful.bitwise_XOR_swap_chars(\"%s\") should return \"%s\"", test_string, result_string__expect)
-//		);
+        	s_test = "Hello World!", 
+        	s_expect = new StringBuilder(s_test).reverse().toString(),
+        	s_result = StringUtils.bitwise_swap_chars(s_test);
+      
         assertEquals(
-    		result_string__expect,
-    		Useful.bitwise_XOR_swap_chars(test_string),
-    		String.format("Utils.Strings.Useful.bitwise_XOR_swap_chars(\"%s\") should return \"%s\"", test_string, result_string__expect)
+    		s_expect,
+    		s_result,
+    		String.format("StringUtils.Useful.bitwise_XOR_swap_chars(\"%s\") should return \"%s\"", s_test, s_expect)
 		);
     }
-    
-//    @Test
-//    public void test_find_substring_permutations() {
-//    }
 }
