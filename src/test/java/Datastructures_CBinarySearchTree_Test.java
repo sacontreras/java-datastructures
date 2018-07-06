@@ -1,72 +1,37 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Comparator;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sacontreras.library.BoxedType;
-import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
-import com.sacontreras.library.datastructures.tree.CBinarySearchTree;
-import com.sacontreras.library.datastructures.tree.COrderedBinaryTree;
-import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
+import com.sacontreras.library.datastructures.test.TestUtils;
+import com.sacontreras.library.datastructures.test.TestUtils.CIntegerBinarySearchTree;
+import com.sacontreras.library.datastructures.test.TestUtils.CIntegerBinaryTreeTraversalListener;
+import com.sacontreras.library.datastructures.test.TestUtils.CPerson;
+import com.sacontreras.library.datastructures.test.TestUtils.CPersonBinarySearchTree;
+import com.sacontreras.library.datastructures.test.TestUtils.CPersonBinarySearchTreeTraversalListener;
 import com.sacontreras.library.util.Transform;
 
 public class Datastructures_CBinarySearchTree_Test {
-	private class CIntegerBinarySearchTree extends CBinarySearchTree<Integer> {}
-	
-	private class CIntegerBinarySearchTreeTraversalListener implements IBinaryTreeTraversalListener<Integer> {
-		private final String order;
-		public final CLinkedListQueue<Integer> q_visit_order = new CLinkedListQueue<Integer>();
-		
-		public CIntegerBinarySearchTreeTraversalListener(final String order) {
-			this.order = order;
-		}
-		
-		@Override
-		public void onNodeVisted(Integer data) {
-			System.out.println(String.format("CIntegerBinarySearchTreeTraversalListener::onNodeVisted-%s: value: %d", order, data));
-			q_visit_order.enqueue(data);
-		}
-
-		@Override
-		public void onNullNode() {
-			System.out.println(String.format("CIntegerBinarySearchTreeTraversalListener::onNullNode-%s", order));
-		}
-	}
-	
 	@Test
 	@DisplayName("test_CBinarySearchTree")
 	public void test_CBinarySearchTree() {
-		CIntegerBinarySearchTree intBinarySearchTree = new CIntegerBinarySearchTree();
-		
-		//pre-prder amounts to insertion order
-		int[] i_ary_expected_preorder = new int[] {
-			30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50
-		};
-		
-		for (int i = 0; i < i_ary_expected_preorder.length; i++)
-			intBinarySearchTree.insert(i_ary_expected_preorder[i]);
-		
-		//in-order (left, visit, right):
-		//		5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-		int[] i_ary_expected_inorder = new int[] {
-			5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-		};
+		CIntegerBinarySearchTree intBinarySearchTree = CIntegerBinarySearchTree.fromArray(TestUtils.i_ary_expected_preorder);
+
 		
 		//pre-order traversal
-		CIntegerBinarySearchTreeTraversalListener intBinarySearchTreeTraversalListener = new CIntegerBinarySearchTreeTraversalListener("preOrder");
+		CIntegerBinaryTreeTraversalListener intBinarySearchTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinarySearchTree.class.getSimpleName(), "preOrder");
 		intBinarySearchTree.traversePreOrder(intBinarySearchTreeTraversalListener);
 		Integer[] int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
-		int i_expect = i_ary_expected_preorder.length;
+		int i_expect = TestUtils.i_ary_expected_preorder.length;
 		int i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_preorder.length; i++) {
-			i_expect = i_ary_expected_preorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_preorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_preorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -79,14 +44,14 @@ public class Datastructures_CBinarySearchTree_Test {
 		int n = -1;
 		while (iterator_preorder.hasNext()) {
 			n++;
-			i_expect = i_ary_expected_preorder[n];
+			i_expect = TestUtils.i_ary_expected_preorder[n];
 			i_result = iterator_preorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = i_ary_expected_preorder.length;
+		i_expect = TestUtils.i_ary_expected_preorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
@@ -94,17 +59,17 @@ public class Datastructures_CBinarySearchTree_Test {
 		);
 		
 		//in-order traversal
-		intBinarySearchTreeTraversalListener = new CIntegerBinarySearchTreeTraversalListener("inOrder");
+		intBinarySearchTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinarySearchTree.class.getSimpleName(), "inOrder");
 		intBinarySearchTree.traverseInOrder(intBinarySearchTreeTraversalListener);
 		int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
-		i_expect = i_ary_expected_inorder.length;
+		i_expect = TestUtils.i_ary_expected_inorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
-			i_expect = i_ary_expected_inorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_inorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_inorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -117,21 +82,78 @@ public class Datastructures_CBinarySearchTree_Test {
 		n = -1;
 		while (iterator_inorder.hasNext()) {
 			n++;
-			i_expect = i_ary_expected_inorder[n];
+			i_expect = TestUtils.i_ary_expected_inorder[n];
 			i_result = iterator_inorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = i_ary_expected_inorder.length;
+		i_expect = TestUtils.i_ary_expected_inorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		
-		intBinarySearchTreeTraversalListener = new CIntegerBinarySearchTreeTraversalListener("levelOrder");
+		intBinarySearchTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinarySearchTree.class.getSimpleName(), "levelOrder");
 		intBinarySearchTree.traverseLevelOrder(intBinarySearchTreeTraversalListener);
+	}
+	
+	@Test
+	@DisplayName("test_BinarySearch_not_comparable")
+	public void test_BinarySearch_not_comparable() {
+		CPersonBinarySearchTree personBinarySearchTree = CPersonBinarySearchTree.fromArray(TestUtils.person_ary_expected_preorder);
+		
+		//pre-order traversal
+		CPersonBinarySearchTreeTraversalListener personBinarySearchTreeTraversalListener = new CPersonBinarySearchTreeTraversalListener("preOrder");
+		personBinarySearchTree.traversePreOrder(personBinarySearchTreeTraversalListener);
+		CPerson[] person_ary = Transform.to_array(personBinarySearchTreeTraversalListener.q_visit_order);
+		int i_expect = TestUtils.i_ary_expected_preorder.length;
+		int i_result = person_ary.length;
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		CPerson 
+			p_expect = null,
+			p_result = null;
+		for (int i = 0; i < TestUtils.person_ary_expected_preorder.length; i++) {
+			p_expect = TestUtils.person_ary_expected_preorder[i];
+			p_result = person_ary[i];
+			assertEquals(
+				p_expect,
+				p_result
+			);
+		}
+		
+		//in-order traversal
+		personBinarySearchTreeTraversalListener = new CPersonBinarySearchTreeTraversalListener("inOrder");
+		personBinarySearchTree.traverseInOrder(personBinarySearchTreeTraversalListener);
+		person_ary = Transform.to_array(personBinarySearchTreeTraversalListener.q_visit_order);
+		i_expect = TestUtils.person_ary_expected_inorder.length;
+		i_result = person_ary.length;
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		for (int i = 0; i < TestUtils.person_ary_expected_inorder.length; i++) {
+			p_expect = TestUtils.person_ary_expected_inorder[i];
+			p_result = person_ary[i];
+			assertEquals(
+				p_expect,
+				p_result
+			);
+		}
+		
+		//post-order traversal
+		personBinarySearchTreeTraversalListener = new CPersonBinarySearchTreeTraversalListener("postOrder");
+		personBinarySearchTree.traversePostOrder(personBinarySearchTreeTraversalListener);
+		
+		//level-order traversal
+		personBinarySearchTreeTraversalListener = new CPersonBinarySearchTreeTraversalListener("levelOrder");
+		personBinarySearchTree.traverseLevelOrder(personBinarySearchTreeTraversalListener);
+		
+		//TODO: add remaining traversal validation
 	}
 }

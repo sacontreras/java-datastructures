@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import com.sacontreras.library.BoxedType;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
+import com.sacontreras.library.datastructures.test.TestUtils;
+import com.sacontreras.library.datastructures.test.TestUtils.CIntegerBinaryTree;
+import com.sacontreras.library.datastructures.test.TestUtils.CIntegerBinaryTreeNode;
+import com.sacontreras.library.datastructures.test.TestUtils.CIntegerBinaryTreeTraversalListener;
 import com.sacontreras.library.datastructures.tree.CBinaryTree;
 import com.sacontreras.library.datastructures.tree.CBinaryTreeNode;
 import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
@@ -14,39 +18,7 @@ import com.sacontreras.library.util.Transform;
 
 public class Datastructures_CBinaryTree_Test {
 	
-	private class CIntegerBinaryTree extends CBinaryTree<Integer> {
-		public CIntegerBinaryTree(CIntegerBinaryTreeNode root) {
-			super(root);
-		}
-
-		public CIntegerBinaryTree() {
-			super();
-		}
-	}
-	private class CIntegerBinaryTreeNode extends CBinaryTreeNode<Integer> {
-		public CIntegerBinaryTreeNode(int i) {
-			super(i);
-		}
-	}
-	private class CIntegerBinaryTreeTraversalListener implements IBinaryTreeTraversalListener<Integer> {
-		private final String order;
-		public final CLinkedListQueue<Integer> q_visit_order = new CLinkedListQueue<Integer>();
-		
-		public CIntegerBinaryTreeTraversalListener(final String order) {
-			this.order = order;
-		}
-		
-		@Override
-		public void onNodeVisted(Integer data) {
-			System.out.println(String.format("onNodeVisted-%s: value: %d", order, data));
-			q_visit_order.enqueue(data);
-		}
-
-		@Override
-		public void onNullNode() {
-			System.out.println(String.format("onNullNode-%s", order));
-		}
-	}
+	
 
 	@Test
 	@DisplayName("test_CBinaryTree")
@@ -73,53 +45,6 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
-
-		int[] i_ary_expected = new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
-		//simulate manual BST-insertion using above array in this order: 
-		//{
-		//	30 --> root, 
-		//	20 --> root.left, 
-		//	45 --> root.right, 
-		//	10 --> root.left.left, 
-		//	25 --> root.left.right
-		//	5  --> root.left.left.left
-		//  15 --> root.left.left.right
-		//  35 --> root.right.left
-		//  55 --> root.right.right
-		//  40 --> root.right.left.right
-		//  50 --> root.right.right.left
-		//}
-		//Graphically, we have:
-		//			  30
-		//	   	   /     \
-		//	      /	      \
-		//	     20       45
-		//		/  \     /  \
-		//	   /    \   /    \
-		//	  10    25 35     55
-		//	 /  \       \    /
-		//  /    \       \  /
-		// 5     15      40 50
-		
-		//Expected yield of traversals:
-		//	pre-order (visit, left, right):
-		//		30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50		
-		int[] i_ary_expected_preorder = new int[]{
-			30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50
-		};
-		//in-order (left, visit, right):
-		//		5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55
-		int[] i_ary_expected_inorder = i_ary_expected;
-		//post-order (left, right, vist):
-		//		5, 15, 10, 25, 20, 40, 35, 50, 55, 45, 30 
-		int[] i_ary_expected_postorder = new int[]{
-			5, 15, 10, 25, 20, 40, 35, 50, 55, 45, 30
-		};
-		//level-order (breadt-first, left, right):
-		//		30, 20, 45, 10, 25, 35, 55, 5, 15, 40, 50
-		int[] i_ary_expected_levelorder = new int[]{
-			30, 20, 45, 10, 25, 35, 55, 5, 15, 40, 50
-		};
 		
 		CIntegerBinaryTreeNode newRoot = null;
 		
@@ -146,9 +71,9 @@ public class Datastructures_CBinaryTree_Test {
 		// 20 --> root.left, 
 		// 45 --> root.right
 		newRoot = (CIntegerBinaryTreeNode)CIntegerBinaryTree.make(
-			new CIntegerBinaryTreeNode(i_ary_expected[5]),
-			new CIntegerBinaryTreeNode(i_ary_expected[3]), 
-			new CIntegerBinaryTreeNode(i_ary_expected[8])
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[5]),
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[3]), 
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[8])
 		);
 		i_expect = 0;
 		i_result = CIntegerBinaryTree.depth(newRoot);
@@ -185,8 +110,8 @@ public class Datastructures_CBinaryTree_Test {
 		// 25 --> root.left.right
 		CIntegerBinaryTree.make(
 			newRoot.getLeft(), 
-			new CIntegerBinaryTreeNode(i_ary_expected[1]), 
-			new CIntegerBinaryTreeNode(i_ary_expected[4])
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[1]), 
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[4])
 		);
 		i_expect = 1;
 		i_result = CIntegerBinaryTree.depth(newRoot.getLeft());
@@ -223,8 +148,8 @@ public class Datastructures_CBinaryTree_Test {
 		// 15 --> root.left.left.right
 		CIntegerBinaryTree.make(
 			newRoot.getLeft().getLeft(), 
-			new CIntegerBinaryTreeNode(i_ary_expected[0]), 
-			new CIntegerBinaryTreeNode(i_ary_expected[2])
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[0]), 
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[2])
 		);
 		i_expect = 2;
 		i_result = CIntegerBinaryTree.depth(newRoot.getLeft().getLeft());
@@ -261,8 +186,8 @@ public class Datastructures_CBinaryTree_Test {
 		// 55 --> root.right.right
 		CIntegerBinaryTree.make(
 			newRoot.getRight(), 
-			new CIntegerBinaryTreeNode(i_ary_expected[6]), 
-			new CIntegerBinaryTreeNode(i_ary_expected[10])
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[6]), 
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[10])
 		);
 		i_expect = 1;
 		i_result = CIntegerBinaryTree.depth(newRoot.getRight());
@@ -299,7 +224,7 @@ public class Datastructures_CBinaryTree_Test {
 		CIntegerBinaryTree.make(
 			newRoot.getRight().getLeft(), 
 			null, 
-			new CIntegerBinaryTreeNode(i_ary_expected[7])
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[7])
 		);
 		i_expect = 2;
 		i_result = CIntegerBinaryTree.depth(newRoot.getRight().getLeft());
@@ -335,7 +260,7 @@ public class Datastructures_CBinaryTree_Test {
 		// 50 --> root.right.right.left
 		CIntegerBinaryTree.make(
 			newRoot.getRight().getRight(), 
-			new CIntegerBinaryTreeNode(i_ary_expected[9]), 
+			new CIntegerBinaryTreeNode(TestUtils.i_ary_expected[9]), 
 			null
 		);
 		i_expect = 2;
@@ -384,17 +309,17 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		
 		//pre-order traversal
-		CIntegerBinaryTreeTraversalListener intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("preOrder");
+		CIntegerBinaryTreeTraversalListener intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinaryTree.class.getSimpleName(), "preOrder");
 		intBinaryTree.traversePreOrder(intBinaryTreeTraversalListener);
 		Integer[] int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
-		i_expect = i_ary_expected_preorder.length;
+		i_expect = TestUtils.i_ary_expected_preorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_preorder.length; i++) {
-			i_expect = i_ary_expected_preorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_preorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_preorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -407,14 +332,14 @@ public class Datastructures_CBinaryTree_Test {
 		int n = -1;
 		while (iterator_preorder.hasNext()) {
 			n++;
-			i_expect = i_ary_expected_preorder[n];
+			i_expect = TestUtils.i_ary_expected_preorder[n];
 			i_result = iterator_preorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = i_ary_expected_preorder.length;
+		i_expect = TestUtils.i_ary_expected_preorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
@@ -422,17 +347,17 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		
 		//in-order traversal
-		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("inOrder");
+		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinaryTree.class.getSimpleName(), "inOrder");
 		intBinaryTree.traverseInOrder(intBinaryTreeTraversalListener);
 		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
-		i_expect = i_ary_expected_inorder.length;
+		i_expect = TestUtils.i_ary_expected_inorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_inorder.length; i++) {
-			i_expect = i_ary_expected_inorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_inorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_inorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -445,14 +370,14 @@ public class Datastructures_CBinaryTree_Test {
 		n = -1;
 		while (iterator_inorder.hasNext()) {
 			n++;
-			i_expect = i_ary_expected_inorder[n];
+			i_expect = TestUtils.i_ary_expected_inorder[n];
 			i_result = iterator_inorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = i_ary_expected_inorder.length;
+		i_expect = TestUtils.i_ary_expected_inorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
@@ -460,17 +385,17 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		
 		//post-order traversal
-		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("postOrder");
+		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinaryTree.class.getSimpleName(), "postOrder");
 		intBinaryTree.traversePostOrder(intBinaryTreeTraversalListener);
 		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
-		i_expect = i_ary_expected_postorder.length;
+		i_expect = TestUtils.i_ary_expected_postorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_postorder.length; i++) {
-			i_expect = i_ary_expected_postorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_postorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_postorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -479,17 +404,17 @@ public class Datastructures_CBinaryTree_Test {
 		}
 		
 		//level-order traversal
-		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener("levelOrder");
+		intBinaryTreeTraversalListener = new CIntegerBinaryTreeTraversalListener(CIntegerBinaryTree.class.getSimpleName(), "levelOrder");
 		intBinaryTree.traverseLevelOrder(intBinaryTreeTraversalListener);
 		int_ary = Transform.to_array(intBinaryTreeTraversalListener.q_visit_order);
-		i_expect = i_ary_expected_levelorder.length;
+		i_expect = TestUtils.i_ary_expected_levelorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < i_ary_expected_levelorder.length; i++) {
-			i_expect = i_ary_expected_levelorder[i];
+		for (int i = 0; i < TestUtils.i_ary_expected_levelorder.length; i++) {
+			i_expect = TestUtils.i_ary_expected_levelorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,

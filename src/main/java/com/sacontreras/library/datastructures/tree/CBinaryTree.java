@@ -4,8 +4,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
+import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener.DISPOSITION;
 
-public class CBinaryTree<TData> {
+public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	protected CBinaryTreeNode<TData> root = null;
 	
@@ -16,6 +17,7 @@ public class CBinaryTree<TData> {
 		this(null);
 	}
 	
+	@Override
 	public boolean isEmpty() {
 		return root == null;
 	}
@@ -55,6 +57,8 @@ public class CBinaryTree<TData> {
 			s = 1 + size(root.left) + size(root.right);
 		return s;
 	}
+	
+	@Override
 	final public int size() {
 		return size(root);
 	}
@@ -66,6 +70,8 @@ public class CBinaryTree<TData> {
         }
         return h;
     }
+	
+	@Override
 	final public int height() {
 		return height(root);
 	}
@@ -78,13 +84,19 @@ public class CBinaryTree<TData> {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
-			traversalListener.onNodeVisted(root.data);
+			TData 
+				data = root.data,
+				data_parent = (root.parent != null ? root.parent.data : null);
+			DISPOSITION disp = (root.parent == null ? DISPOSITION.ROOT : (root.parent.left != null && root.parent.left == root ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			traversalListener.onNodeVisted(data, disp, data_parent);
 			if (root.left != null)
 				traversePreOrder(root.left, traversalListener);
 			if (root.right != null)
 				traversePreOrder(root.right, traversalListener);
 		}
 	}
+	
+	@Override
 	public void traversePreOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
 		traversePreOrder(root, traversalListener);
 	}
@@ -151,11 +163,17 @@ public class CBinaryTree<TData> {
 		else {
 			if (root.left != null)
 				traverseInOrder(root.left, traversalListener);
-			traversalListener.onNodeVisted(root.data);
+			TData 
+				data = root.data,
+				data_parent = (root.parent != null ? root.parent.data : null);
+			DISPOSITION disp = (root.parent == null ? DISPOSITION.ROOT : (root.parent.left != null && root.parent.left == root ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			traversalListener.onNodeVisted(data, disp, data_parent);
 			if (root.right != null)
 				traverseInOrder(root.right, traversalListener);
 		}
 	}
+	
+	@Override
 	public void traverseInOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
 		traverseInOrder(root, traversalListener);
 	}
@@ -249,9 +267,15 @@ public class CBinaryTree<TData> {
 				traversePostOrder(root.left, traversalListener);
 			if (root.right != null)
 				traversePostOrder(root.right, traversalListener);
-			traversalListener.onNodeVisted(root.data);
+			TData 
+				data = root.data,
+				data_parent = (root.parent != null ? root.parent.data : null);
+			DISPOSITION disp = (root.parent == null ? DISPOSITION.ROOT : (root.parent.left != null && root.parent.left == root ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			traversalListener.onNodeVisted(data, disp, data_parent);
 		}
 	}
+	
+	@Override
 	public void traversePostOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
 		traversePostOrder(root, traversalListener);
 	}
@@ -272,7 +296,11 @@ public class CBinaryTree<TData> {
 			q.enqueue(root);
 			while (!q.isEmpty()) {
 				CBinaryTreeNode<TData> node = q.poll();
-				traversalListener.onNodeVisted(node.data);
+				TData 
+					data = node.data,
+					data_parent = (node.parent != null ? node.parent.data : null);
+				DISPOSITION disp = (node.parent == null ? DISPOSITION.ROOT : (node.parent.left != null && node.parent.left == node ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+				traversalListener.onNodeVisted(data, disp, data_parent);
 				if (node.left != null)
 					q.enqueue(node.left);
 				if (node.right != null)
@@ -280,6 +308,8 @@ public class CBinaryTree<TData> {
 			}
 		}
 	}
+	
+	@Override
 	public void traverseLevelOrder(final IBinaryTreeTraversalListener<TData> traversalListener) {
 		traverseLevelOrder(root, traversalListener);
 	}
