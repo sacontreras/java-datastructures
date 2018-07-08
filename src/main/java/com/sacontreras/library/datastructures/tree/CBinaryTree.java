@@ -22,7 +22,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return root == null;
 	}
 	
-	final public static <TData> CBinaryTreeNode<TData> make(final CBinaryTreeNode<TData> root, final CBinaryTreeNode<TData> left, final CBinaryTreeNode<TData> right) {
+	final public static <TData> 
+	CBinaryTreeNode<TData> make(final CBinaryTreeNode<TData> root, final CBinaryTreeNode<TData> left, final CBinaryTreeNode<TData> right) {
 		CBinaryTreeNode<TData> newTreeRoot = null;
 		if (root != null) {
 			root.left = left;
@@ -39,7 +40,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		this.root = root;	//should copy? for now we just set reference to
 	}
 	
-	final public static <TData> int depth(final CBinaryTreeNode<TData> node) {
+	final public static <TData> 
+	int depth(final CBinaryTreeNode<TData> node) {
 		int d = -1;
 		if (node != null) {
 			d = 0;
@@ -51,7 +53,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return d;
 	}
 	
-	final public static <TData> int size(final CBinaryTreeNode<TData> root) {
+	final public static <TData> 
+	int size(final CBinaryTreeNode<TData> root) {
 		int s = 0;
 		if (root != null)
 			s = 1 + size(root.left) + size(root.right);
@@ -63,11 +66,11 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return size(root);
 	}
 	
-	final public static <TData> int height(final CBinaryTreeNode<TData> root) {
+	final public static <TData> 
+	int height(final CBinaryTreeNode<TData> root) {
 		int h = -1;
-        if (root != null) {
+        if (root != null)
         	h = 1 + Math.max(height(root.left), height(root.right));
-        }
         return h;
     }
 	
@@ -80,7 +83,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	
 	//traversal: pre-order
-	public static <TData> void traversePreOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	public static <TData> 
+	void traversePreOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
@@ -101,11 +105,13 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		traversePreOrder(root, traversalListener);
 	}
 	
-	private static <TData> CBinaryTreeNode<TData> predecessor_preorder(CBinaryTreeNode<TData> root_node) {
+	private static <TData> 
+	CBinaryTreeNode<TData> predecessor_preorder(CBinaryTreeNode<TData> root_node) {
 		return null;
 	}
 	
-	private static <TData> CBinaryTreeNode<TData> successor_preorder(CBinaryTreeNode<TData> root_node) {
+	private static <TData> 
+	CBinaryTreeNode<TData> successor_preorder(CBinaryTreeNode<TData> root_node) {
 		if (root_node == null)
 	        return null;
 		
@@ -130,7 +136,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return successor;
 	}
 	
-	public static <TData> Iterator<TData> iterator_preorder(final CBinaryTreeNode<TData> start_from) {
+	public static <TData> 
+	Iterator<TData> iterator_preorder(final CBinaryTreeNode<TData> start_from) {
 		return new Iterator<TData>() {
 			private CBinaryTreeNode<TData> _next_node = start_from;
 
@@ -157,7 +164,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	
 	//traversal: in-order
-	public static <TData> void traverseInOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	public static <TData> 
+	void traverseInOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
@@ -178,7 +186,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		traverseInOrder(root, traversalListener);
 	}
 	
-	private static <TData> CBinaryTreeNode<TData> predecessor_inorder(CBinaryTreeNode<TData> root_node) {
+	private static <TData> 
+	CBinaryTreeNode<TData> predecessor_inorder(CBinaryTreeNode<TData> root_node) {
 		if (root_node == null)
 	        return null;
 		
@@ -203,7 +212,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	    }
 	}
 	
-	private static <TData> CBinaryTreeNode<TData> successor_inorder(CBinaryTreeNode<TData> root_node) {
+	private static <TData> 
+	CBinaryTreeNode<TData> successor_inorder(CBinaryTreeNode<TData> root_node) {
 		if (root_node == null)
 	        return null;
 		
@@ -224,7 +234,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	    }
 	}
 	
-	public static <TData> Iterator<TData> iterator_inorder(final CBinaryTreeNode<TData> start_from) {
+	public static <TData> 
+	Iterator<TData> iterator_inorder(final CBinaryTreeNode<TData> start_from) {
 		return new Iterator<TData>() {
 			private CBinaryTreeNode<TData> _next_node = start_from;
 
@@ -259,7 +270,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	
 	//traversal: post-order
-	public static <TData> void traversePostOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	public static <TData> 
+	void traversePostOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
@@ -288,7 +300,8 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	
 	//traversal: level-order
-	public static <TData> void traverseLevelOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
+	public static <TData> 
+	void traverseLevelOrder(final CBinaryTreeNode<TData> root, final IBinaryTreeTraversalListener<TData> traversalListener) {
 		if (root == null)
 			traversalListener.onNullNode();
 		else {
