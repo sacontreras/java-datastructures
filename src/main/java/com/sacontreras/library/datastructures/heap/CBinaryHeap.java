@@ -275,14 +275,23 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
             i_node = i_swap;
         } while (i_node >= 0);
 	}
+	
+	
 
 	@Override
-	public TData remove() {
-		TData data = ary.get(0);
-        ary.set(ary.get(count--), 0);
-        trickledown(0);
-//        if (3 * count < ary.getSize()) 
-//        	ary.resize();
-        return data;
+	public TData peek() {
+		return ary.get(0);
+	}
+
+	@Override
+	public TData poll() {
+		TData data = peek();
+		if (data != null) {
+			ary.set(ary.get(--count), 0);
+	        trickledown(0);
+//	        if (3 * count < ary.getSize()) 
+//	        	ary.resize();
+		}
+		return data;
 	}
 }
