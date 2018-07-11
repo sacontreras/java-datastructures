@@ -1,0 +1,10 @@
+language: java
+
+jdk: oraclejdk8
+
+#this should be all we need
+#according to https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle,
+# If your project contains a build.gradle file in the repository root, Travis CI builds your project with Gradle:
+#   gradle check    (gradle check runs gradle test and gradle junitPlatformTest tasks)
+# If your project also includes the gradlew wrapper script in the repository root, Travis CI uses that wrapper instead:
+#   ./gradlew check
