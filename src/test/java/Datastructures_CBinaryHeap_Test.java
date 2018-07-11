@@ -4,25 +4,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
-import com.sacontreras.library.datastructures.test.TestUtils;
+import com.sacontreras.library.datastructures.test.mock.Arrays;
+import com.sacontreras.library.datastructures.test.mock.Heaps;
 
 public class Datastructures_CBinaryHeap_Test {
 	
 	@Test
 	@DisplayName("test_CBinaryHeap")
 	public void test_CBinaryHeap() {
-		TestUtils.CIntegerBinaryHeap int_bin_heap = TestUtils.CIntegerBinaryHeap.fromArray(TestUtils.i_ary_expected_preorder);
+		Heaps.CIntegerBinaryHeap int_bin_heap = Heaps.CIntegerBinaryHeap.fromArray(Arrays.i_ary_expected_preorder);
 		
-		TestUtils.CIntegerBinaryHeapTraversalListener traversalListener = new TestUtils.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
+		Heaps.CIntegerBinaryHeapTraversalListener traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
 		
-		traversalListener = new TestUtils.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
 		
-		traversalListener = new TestUtils.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
 		
-		traversalListener = new TestUtils.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
 		int_bin_heap.traverseLevelOrder(traversalListener);
 		
 		final CLinkedListQueue<Integer> q_priority_order = new CLinkedListQueue<Integer>();
@@ -37,7 +38,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect = -1,
 			i_result = -1;
 		while (!q_priority_order.isEmpty()) {
-			i_expect = TestUtils.i_ary_expected_inorder[n];
+			i_expect = Arrays.i_ary_expected_inorder[n];
 			i_result = q_priority_order.poll();
 			assertEquals(
 				i_expect,
