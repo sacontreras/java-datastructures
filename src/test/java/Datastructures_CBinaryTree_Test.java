@@ -46,6 +46,12 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = true;
+		b_result = intBinaryTree.isFull();
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		Trees.CIntegerBinaryTreeNode newRoot = null;
 		
@@ -67,10 +73,27 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isEmpty(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 30 --> root, 
 		// 20 --> root.left, 
 		// 45 --> root.right
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
 		newRoot = (Trees.CIntegerBinaryTreeNode)Trees.CIntegerBinaryTree.make(
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[5]),
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[3]), 
@@ -106,13 +129,95 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isEmpty(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 3);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
-		// 10 --> root.left.left, 
+		// 25 --> root.left.right 
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		   \     
+		//	        \ 
+		//	        25
+		Trees.CIntegerBinaryTree.make(
+			newRoot.getLeft(), 
+			null, 
+			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[4])
+		);
+		i_expect = 1;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = -1;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft().getLeft());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 2;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft().getRight());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 4;
+		i_result = Trees.CIntegerBinaryTree.size(newRoot);
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 2;
+		i_result = Trees.CIntegerBinaryTree.height(newRoot);
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 4);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		
 		// 25 --> root.left.right
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     
+		//	   /    \ 
+		//	  10    25
 		Trees.CIntegerBinaryTree.make(
 			newRoot.getLeft(), 
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[1]), 
-			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[4])
+			newRoot.getLeft().getRight()
 		);
 		i_expect = 1;
 		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft());
@@ -144,12 +249,94 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
-		
-		// 5 --> root.left.left.left, 
-		// 15 --> root.left.left.right
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 5);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		 
+		// 5 --> root.left.left.left
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     
+		//	   /    \   
+		//	  10    25 
+		//	 /         
+		//  /           
+		// 5     
 		Trees.CIntegerBinaryTree.make(
 			newRoot.getLeft().getLeft(), 
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[0]), 
+			null
+		);
+		i_expect = 2;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft().getLeft());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 3;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft().getLeft().getLeft());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = -1;
+		i_result = Trees.CIntegerBinaryTree.depth(newRoot.getLeft().getLeft().getRight());
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 6;
+		i_result = Trees.CIntegerBinaryTree.size(newRoot);
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		i_expect = 3;
+		i_result = Trees.CIntegerBinaryTree.height(newRoot);
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 6);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		
+		// 5 --> root.left.left.left
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     
+		//	   /    \   
+		//	  10    25 
+		//	 /  \       
+		//  /    \       
+		// 5     15
+		Trees.CIntegerBinaryTree.make(
+			newRoot.getLeft().getLeft(), 
+			newRoot.getLeft().getLeft().getLeft(), 
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[2])
 		);
 		i_expect = 2;
@@ -182,9 +369,32 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 7);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 35 --> root.right.left
 		// 55 --> root.right.right
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     /  \
+		//	   /    \   /    \
+		//	  10    25 35     55
+		//	 /  \       
+		//  /    \       
+		// 5     15      
 		Trees.CIntegerBinaryTree.make(
 			newRoot.getRight(), 
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[6]), 
@@ -220,8 +430,31 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 9);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 40 --> root.right.left.right
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     /  \
+		//	   /    \   /    \
+		//	  10    25 35     55
+		//	 /  \       \    
+		//  /    \       \  
+		// 5     15      40
 		Trees.CIntegerBinaryTree.make(
 			newRoot.getRight().getLeft(), 
 			null, 
@@ -257,8 +490,31 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 10);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 50 --> root.right.right.left
+		//Graphically:
+		//			  30
+		//	   	   /     \
+		//	      /	      \
+		//	     20       45
+		//		/  \     /  \
+		//	   /    \   /    \
+		//	  10    25 35     55
+		//	 /  \       \    /
+		//  /    \       \  /
+		// 5     15      40 50
 		Trees.CIntegerBinaryTree.make(
 			newRoot.getRight().getRight(), 
 			new Trees.CIntegerBinaryTreeNode(Arrays.i_ary_expected[9]), 
@@ -294,6 +550,18 @@ public class Datastructures_CBinaryTree_Test {
 			i_expect,
 			i_result
 		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isFull(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 11);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		intBinaryTree.make(newRoot);
 		i_expect = 11;
@@ -307,6 +575,24 @@ public class Datastructures_CBinaryTree_Test {
 		assertEquals(
 			i_expect,
 			i_result
+		);
+		b_expect = false;
+		b_result = intBinaryTree.isEmpty();
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = intBinaryTree.isFull();
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = intBinaryTree.isComplete();
+		assertEquals(
+			b_expect,
+			b_result
 		);
 		
 		//pre-order traversal
