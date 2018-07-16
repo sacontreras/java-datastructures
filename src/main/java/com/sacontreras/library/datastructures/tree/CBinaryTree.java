@@ -84,6 +84,39 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return height(root);
 	}
 	
+	//a binary tree T is full if each node is either a leaf or possesses exactly two child nodes
+	public static <TData> 
+	boolean isFull(final CBinaryTreeNode<TData> node) {
+		if (node == null)
+			return true;
+		boolean 
+			isLeaf = node.left == null && node.right == null,
+			containsLeftAndRight = node.left != null && node.right != null,
+			full_node = isLeaf || containsLeftAndRight;
+		return full_node && isFull(node.left) && isFull(node.right);
+	}
+	
+	@Override
+	public boolean isFull() {
+		return isFull(root);
+	}
+	
+	
+	//a binary tree T with n levels is complete if all levels except possibly the last are completely full, and the last level has all its nodes to the left side
+	public static <TData> 
+	boolean isComplete(final CBinaryTreeNode<TData> node, final int i_node, final int size) {
+		if (node == null)
+			return true;
+	    if (i_node >= size) 
+	        return false; 
+	    return isComplete(node.left, 2 * i_node + 1, size) && isComplete(node.right, 2 * i_node + 2, size); 
+	}
+	
+	@Override
+	public boolean isComplete() {
+		return isComplete(root, 0, size());
+	}
+	
 	
 	
 	
@@ -334,39 +367,5 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 	
 	public Iterator<TData> iterator_levelorder() {
 		return null;
-	}
-	
-	
-	//a binary tree T is full if each node is either a leaf or possesses exactly two child nodes
-	public static <TData> 
-	boolean isFull(final CBinaryTreeNode<TData> node) {
-		if (node == null)
-			return true;
-		boolean 
-			isLeaf = node.left == null && node.right == null,
-			containsLeftAndRight = node.left != null && node.right != null,
-			full_node = isLeaf || containsLeftAndRight;
-		return full_node && isFull(node.left) && isFull(node.right);
-	}
-	
-	@Override
-	public boolean isFull() {
-		return isFull(root);
-	}
-	
-	
-	//a binary tree T with n levels is complete if all levels except possibly the last are completely full, and the last level has all its nodes to the left side
-	public static <TData> 
-	boolean isComplete(final CBinaryTreeNode<TData> node, final int i_node, final int size) {
-		if (node == null)
-			return true;
-	    if (i_node >= size) 
-	        return false; 
-	    return isComplete(node.left, 2 * i_node + 1, size) && isComplete(node.right, 2 * i_node + 2, size); 
-	}
-	
-	@Override
-	public boolean isComplete() {
-		return isComplete(root, 0, size());
 	}
 }

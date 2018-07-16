@@ -1,16 +1,11 @@
 package com.sacontreras.library.datastructures.tree;
 
 public class CBinaryTreeNode<TData> {
-	protected TData data = null;
-	private int count = 0;
-	public void setData(final TData data) {
-		if (this.data == null || this.data != data)
-			count = 0;
-		this.data = data;
-		count++;
-	}
-	
 	protected CBinaryTreeNode<TData> parent = null;
+	protected TData data = null;
+	protected CBinaryTreeNode<TData> left = null;
+	protected CBinaryTreeNode<TData> right = null;
+	
 	public void setParent(final CBinaryTreeNode<TData> parent) {
 		this.parent = parent;
 	}
@@ -18,7 +13,13 @@ public class CBinaryTreeNode<TData> {
 		return parent;
 	}
 	
-	protected CBinaryTreeNode<TData> left = null;
+	public void setData(final TData data) {
+		this.data = data;
+	}
+	public TData getData() {
+		return data;
+	}
+	
 	public void setLeft(final CBinaryTreeNode<TData> left) {
 		this.left = left;
 	}
@@ -26,7 +27,6 @@ public class CBinaryTreeNode<TData> {
 		return left;
 	}
 	
-	protected CBinaryTreeNode<TData> right = null;
 	public void setRight(final CBinaryTreeNode<TData> right) {
 		this.right = right;
 	}
