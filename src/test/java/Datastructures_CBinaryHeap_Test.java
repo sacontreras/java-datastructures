@@ -220,6 +220,15 @@ public class Datastructures_CBinaryHeap_Test {
 			i_result
 		);
 		
+		//for curiosity's sake... let's traverse since we confirmed heap is not empty
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
+		int_bin_heap.traverseInOrder(traversalListener);
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
+		int_bin_heap.traversePreOrder(traversalListener);
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
+		int_bin_heap.traversePostOrder(traversalListener);
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
+		int_bin_heap.traverseLevelOrder(traversalListener);
 		
 		//expect polling heap to result in-order values
 		final CLinkedListQueue<Integer> q_priority_order = new CLinkedListQueue<Integer>();
@@ -242,13 +251,38 @@ public class Datastructures_CBinaryHeap_Test {
 			n++;
 		}
 		
-		
-		//for curiosity's sake...
+		//for curiosity's sake... heap should be empty since we polled it (till empty)
 		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
+		i_expect = 0;
+		i_result = traversalListener.q_visit_order.getSize();
+		assertEquals(
+			i_expect,
+			i_result
+		);
 		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
+		i_expect = 0;
+		i_result = traversalListener.q_visit_order.getSize();
+		assertEquals(
+			i_expect,
+			i_result
+		);
 		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
+		i_expect = 0;
+		i_result = traversalListener.q_visit_order.getSize();
+		assertEquals(
+			i_expect,
+			i_result
+		);
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
+		int_bin_heap.traverseLevelOrder(traversalListener);
+		i_expect = 0;
+		i_result = traversalListener.q_visit_order.getSize();
+		assertEquals(
+			i_expect,
+			i_result
+		);
 	}
 }

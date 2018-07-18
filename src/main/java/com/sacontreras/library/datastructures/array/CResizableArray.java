@@ -83,7 +83,7 @@ public class CResizableArray<TData> {
     public TData remove(final int index) {
     	TData data = get(index);
     	if (data != null)
-    		ary[load--] = null;
+    		ary[--load] = null;
     	return data;
     }
     

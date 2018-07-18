@@ -156,7 +156,7 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	public TData poll() {
 		TData data = peek();
 		if (data != null) {
-			ary.set(ary.get(--count), 0);
+			ary.set(ary.remove(--count), 0);
 	        trickledown(0);
 //	        if (3 * count < ary.getSize()) 
 //	        	ary.resize();
@@ -224,7 +224,7 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	//traversal: pre-order
 	public static <TData> 
 	void traversePreOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+		if (i_node < 0 || i_node >= heap.ary.getSize())
 			return;
 		TData data = heap.ary.get(i_node);
 		if (data == null)
@@ -260,7 +260,7 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	//traversal: in-order
 	public static <TData> 
 	void traverseInOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+		if (i_node < 0 || i_node >= heap.ary.getSize())
 			return;
 		TData data = heap.ary.get(i_node);
 		if (data == null)
@@ -296,7 +296,7 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	//traversal: post-order
 	public static <TData> 
 	void traversePostOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+		if (i_node < 0 || i_node >= heap.ary.getSize())
 			return;
 		TData data = heap.ary.get(i_node);
 		if (data == null)
@@ -332,8 +332,8 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	//traversal: level-order
 	public static <TData> 
 	void traverseLevelOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (heap.ary.get(i_node) == null)
-			traversalListener.onNullNode();
+		if (i_node < 0 || i_node >= heap.ary.getSize())
+			return;
 		else {
 			CLinkedListQueue<Integer> q = new CLinkedListQueue<Integer>();	//we use a queue because we want FIFO retrieval
 			q.enqueue(i_node);
