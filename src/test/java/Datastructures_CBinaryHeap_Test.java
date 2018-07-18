@@ -159,7 +159,7 @@ public class Datastructures_CBinaryHeap_Test {
 			int_bin_heap.add(val);
 			
 			//so we can visualize its structure after add (after bubbleup)
-			traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener(String.format("CIntegerBinaryHeap-iteration-%d", i), "levelOrder");
+			traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener(String.format("CIntegerBinaryHeap-post-add-iteration-%d", i), "tree-levelOrder");
 			int_bin_heap.traverseLevelOrder(traversalListener);
 			
 			i_expect = i + 1;
@@ -221,13 +221,13 @@ public class Datastructures_CBinaryHeap_Test {
 		);
 		
 		//for curiosity's sake... let's traverse since we confirmed heap is not empty
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
 		int_bin_heap.traverseLevelOrder(traversalListener);
 		
 		//expect polling heap to result in-order values
@@ -252,7 +252,7 @@ public class Datastructures_CBinaryHeap_Test {
 		}
 		
 		//for curiosity's sake... heap should be empty since we polled it (till empty)
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "inOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -260,7 +260,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "preOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -268,7 +268,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "postOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -276,7 +276,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "levelOrder");
+		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
 		int_bin_heap.traverseLevelOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
