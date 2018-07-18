@@ -2,7 +2,7 @@ package com.sacontreras.library.datastructures.heap;
 
 import java.util.Comparator;
 
-import com.sacontreras.library.datastructures.array.CResiableArray;
+import com.sacontreras.library.datastructures.array.CResizableArray;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
 import com.sacontreras.library.datastructures.tree.CBinaryTreeNode;
 import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
@@ -17,7 +17,7 @@ import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener.
 //It follows that the smallest value in the priority Queue (Binary Heap) is therefore stored/always located at position 0 (the root).
 public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	
-	private final CResiableArray<TData> ary;
+	private final CResizableArray<TData> ary;
 	private int count = 0;
 	
 	final private Comparator<TData> comparator;
@@ -26,7 +26,7 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	}
 	
 	public CBinaryHeap(final Comparator<TData> comparator) {
-		ary = new CResiableArray<TData>();
+		ary = new CResizableArray<TData>();
 		this.comparator = comparator;
     }
 	private CBinaryHeap() {
@@ -95,153 +95,6 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	@Override
 	public int height() {
 		return height(this, 0);
-	}
-	
-	//traversal: pre-order
-	public static <TData> 
-	void traversePreOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getSize())
-			return;
-		TData data = heap.ary.get(i_node);
-		if (data == null)
-			traversalListener.onNullNode(i_node);
-		else {
-			int 
-				tmp = -1,
-				i_left = heap.left_child(i_node),
-				i_right = heap.right_child(i_node),
-				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
-				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
-				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
-			TData 
-				data_left = i_left < 0 ? null : heap.ary.get(i_left),
-				data_right = i_right < 0 ? null : heap.ary.get(i_right),
-				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
-				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
-				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
-			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
-			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
-			if (i_left > 0 && data_left != null)
-				traversePreOrder(heap, i_left, traversalListener);
-			if (i_right > 0 && data_right != null)
-				traversePreOrder(heap, i_right, traversalListener);
-		}
-	}
-
-	@Override
-	public void traversePreOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
-		traversePreOrder(this, 0, traversalListener);
-	}
-	
-	//traversal: in-order
-	public static <TData> 
-	void traverseInOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getSize())
-			return;
-		TData data = heap.ary.get(i_node);
-		if (data == null)
-			traversalListener.onNullNode(i_node);
-		else {
-			int 
-				tmp = -1,
-				i_left = heap.left_child(i_node),
-				i_right = heap.right_child(i_node),
-				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
-				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
-				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
-			TData 
-				data_left = i_left < 0 ? null : heap.ary.get(i_left),
-				data_right = i_right < 0 ? null : heap.ary.get(i_right),
-				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
-				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
-				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
-			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
-			if (i_left > 0 && data_left != null)
-				traverseInOrder(heap, i_left, traversalListener);
-			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
-			if (i_right > 0 && data_right != null)
-				traverseInOrder(heap, i_right, traversalListener);
-			}
-	}
-
-	@Override
-	public void traverseInOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
-		traverseInOrder(this, 0, traversalListener);
-	}
-	
-	//traversal: post-order
-	public static <TData> 
-	void traversePostOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (i_node < 0 || i_node >= heap.ary.getSize())
-			return;
-		TData data = heap.ary.get(i_node);
-		if (data == null)
-			traversalListener.onNullNode(i_node);
-		else {
-			int 
-				tmp = -1,
-				i_left = heap.left_child(i_node),
-				i_right = heap.right_child(i_node),
-				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
-				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
-				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
-			TData 
-				data_left = i_left < 0 ? null : heap.ary.get(i_left),
-				data_right = i_right < 0 ? null : heap.ary.get(i_right),
-				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
-				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
-				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
-			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
-			if (i_left > 0)
-				traversePostOrder(heap, i_left, traversalListener);
-			if (i_right > 0)
-				traversePostOrder(heap, i_right, traversalListener);
-			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
-		}
-	}
-
-	@Override
-	public void traversePostOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
-		traversePostOrder(this, 0, traversalListener);
-	}
-	
-	//traversal: level-order
-	public static <TData> 
-	void traverseLevelOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
-		if (heap.ary.get(i_node) == null)
-			traversalListener.onNullNode();
-		else {
-			CLinkedListQueue<Integer> q = new CLinkedListQueue<Integer>();	//we use a queue because we want FIFO retrieval
-			q.enqueue(i_node);
-			while (!q.isEmpty()) {
-				int 
-					i_level_order_node = q.poll(),
-					tmp = -1,
-					i_left = heap.left_child(i_level_order_node),
-					i_right = heap.right_child(i_level_order_node),
-					i_parent = (tmp = heap.parent_of(i_level_order_node)) != i_level_order_node ? tmp : -1,
-					i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
-					i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
-				TData 
-					data = heap.ary.get(i_level_order_node),
-					data_left = i_left < 0 || data == null ? null : heap.ary.get(i_left),
-					data_right = i_right < 0 || data == null ? null : heap.ary.get(i_right),
-					data_parent = i_parent < 0 || data == null ? null : heap.ary.get(i_parent),
-					data_parent_left = i_parent_left < 0 || data_parent == null ? null : heap.ary.get(i_parent_left),
-					data_parent_right = i_parent_right < 0 || data_parent == null ? null : heap.ary.get(i_parent_right);
-				DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
-				traversalListener.onNodeVisted(i_level_order_node, data, disp, i_parent, data_parent);
-				if (i_left > 0 && data_left != null)
-					q.enqueue(i_left);
-				if (i_right > 0 && data_right != null)
-					q.enqueue(i_right);
-			}
-		}
-	}
-
-	@Override
-	public void traverseLevelOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
-		traverseLevelOrder(this, 0, traversalListener);
 	}
 	
 	private void bubbleup(int i_node) {
@@ -347,5 +200,171 @@ public class CBinaryHeap<TData> implements IBinaryHeap<TData> {
 	@Override
 	public boolean isComplete() {
 		return isComplete(this, 0, size());
+	}
+	
+	private static <TData>
+	boolean isHeightBalanced(final CBinaryHeap<TData> heap, final int i_node) {
+		return 
+			heap.ary.get(i_node) == null ||
+			(
+				isHeightBalanced(heap, heap.left_child(i_node)) &&
+				isHeightBalanced(heap, heap.right_child(i_node)) &&
+				Math.abs(height(heap, heap.left_child(i_node)) - height(heap, heap.right_child(i_node))) <= 1
+			);
+	}
+	
+	@Override
+	public boolean isHeightBalanced() {
+		return isHeightBalanced(this, 0);
+	}
+	
+	
+	
+	
+	//traversal: pre-order
+	public static <TData> 
+	void traversePreOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
+		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+			return;
+		TData data = heap.ary.get(i_node);
+		if (data == null)
+			traversalListener.onNullNode(i_node);
+		else {
+			int 
+				tmp = -1,
+				i_left = heap.left_child(i_node),
+				i_right = heap.right_child(i_node),
+				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
+				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
+				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
+			TData 
+				data_left = i_left < 0 ? null : heap.ary.get(i_left),
+				data_right = i_right < 0 ? null : heap.ary.get(i_right),
+				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
+				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
+				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
+			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
+			if (i_left > 0 && data_left != null)
+				traversePreOrder(heap, i_left, traversalListener);
+			if (i_right > 0 && data_right != null)
+				traversePreOrder(heap, i_right, traversalListener);
+		}
+	}
+
+	@Override
+	public void traversePreOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
+		traversePreOrder(this, 0, traversalListener);
+	}
+	
+	//traversal: in-order
+	public static <TData> 
+	void traverseInOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
+		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+			return;
+		TData data = heap.ary.get(i_node);
+		if (data == null)
+			traversalListener.onNullNode(i_node);
+		else {
+			int 
+				tmp = -1,
+				i_left = heap.left_child(i_node),
+				i_right = heap.right_child(i_node),
+				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
+				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
+				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
+			TData 
+				data_left = i_left < 0 ? null : heap.ary.get(i_left),
+				data_right = i_right < 0 ? null : heap.ary.get(i_right),
+				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
+				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
+				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
+			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			if (i_left > 0 && data_left != null)
+				traverseInOrder(heap, i_left, traversalListener);
+			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
+			if (i_right > 0 && data_right != null)
+				traverseInOrder(heap, i_right, traversalListener);
+			}
+	}
+
+	@Override
+	public void traverseInOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
+		traverseInOrder(this, 0, traversalListener);
+	}
+	
+	//traversal: post-order
+	public static <TData> 
+	void traversePostOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
+		if (i_node < 0 || i_node >= heap.ary.getCapacity())
+			return;
+		TData data = heap.ary.get(i_node);
+		if (data == null)
+			traversalListener.onNullNode(i_node);
+		else {
+			int 
+				tmp = -1,
+				i_left = heap.left_child(i_node),
+				i_right = heap.right_child(i_node),
+				i_parent = (tmp = heap.parent_of(i_node)) != i_node ? tmp : -1,
+				i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
+				i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
+			TData 
+				data_left = i_left < 0 ? null : heap.ary.get(i_left),
+				data_right = i_right < 0 ? null : heap.ary.get(i_right),
+				data_parent = i_parent < 0 ? null : heap.ary.get(i_parent),
+				data_parent_left = i_parent_left < 0 ? null : heap.ary.get(i_parent_left),
+				data_parent_right = i_parent_right < 0 ? null : heap.ary.get(i_parent_right);
+			DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+			if (i_left > 0)
+				traversePostOrder(heap, i_left, traversalListener);
+			if (i_right > 0)
+				traversePostOrder(heap, i_right, traversalListener);
+			traversalListener.onNodeVisted(i_node, data, disp, i_parent, data_parent);
+		}
+	}
+
+	@Override
+	public void traversePostOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
+		traversePostOrder(this, 0, traversalListener);
+	}
+	
+	//traversal: level-order
+	public static <TData> 
+	void traverseLevelOrder(final CBinaryHeap<TData> heap, final int i_node, final IBinaryHeapTraversalListener<TData> traversalListener) {
+		if (heap.ary.get(i_node) == null)
+			traversalListener.onNullNode();
+		else {
+			CLinkedListQueue<Integer> q = new CLinkedListQueue<Integer>();	//we use a queue because we want FIFO retrieval
+			q.enqueue(i_node);
+			while (!q.isEmpty()) {
+				int 
+					i_level_order_node = q.poll(),
+					tmp = -1,
+					i_left = heap.left_child(i_level_order_node),
+					i_right = heap.right_child(i_level_order_node),
+					i_parent = (tmp = heap.parent_of(i_level_order_node)) != i_level_order_node ? tmp : -1,
+					i_parent_left = i_parent < 0 ? -1 : heap.left_child(i_parent),
+					i_parent_right = i_parent < 0 ? -1 : heap.right_child(i_parent);
+				TData 
+					data = heap.ary.get(i_level_order_node),
+					data_left = i_left < 0 || data == null ? null : heap.ary.get(i_left),
+					data_right = i_right < 0 || data == null ? null : heap.ary.get(i_right),
+					data_parent = i_parent < 0 || data == null ? null : heap.ary.get(i_parent),
+					data_parent_left = i_parent_left < 0 || data_parent == null ? null : heap.ary.get(i_parent_left),
+					data_parent_right = i_parent_right < 0 || data_parent == null ? null : heap.ary.get(i_parent_right);
+				DISPOSITION disp = (data_parent == null ? DISPOSITION.ROOT : (data_parent_left != null && data_parent_left == data ? DISPOSITION.LEFT_CHILD : DISPOSITION.RIGHT_CHILD));
+				traversalListener.onNodeVisted(i_level_order_node, data, disp, i_parent, data_parent);
+				if (i_left > 0 && data_left != null)
+					q.enqueue(i_left);
+				if (i_right > 0 && data_right != null)
+					q.enqueue(i_right);
+			}
+		}
+	}
+
+	@Override
+	public void traverseLevelOrder(final IBinaryHeapTraversalListener<TData> traversalListener) {
+		traverseLevelOrder(this, 0, traversalListener);
 	}
 }

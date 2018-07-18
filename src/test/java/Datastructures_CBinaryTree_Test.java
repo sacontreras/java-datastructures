@@ -147,6 +147,12 @@ public class Datastructures_CBinaryTree_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 25 --> root.left.right 
 		//Graphically:
@@ -204,6 +210,12 @@ public class Datastructures_CBinaryTree_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 25 --> root.left.right
 		//Graphically:
@@ -257,6 +269,12 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		b_expect = true;
 		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 5);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
 		assertEquals(
 			b_expect,
 			b_result
@@ -321,6 +339,12 @@ public class Datastructures_CBinaryTree_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 5 --> root.left.left.left
 		//Graphically:
@@ -377,6 +401,12 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		b_expect = false;
 		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 7);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = false;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
 		assertEquals(
 			b_expect,
 			b_result
@@ -442,6 +472,12 @@ public class Datastructures_CBinaryTree_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		// 40 --> root.right.left.right
 		//Graphically:
@@ -498,6 +534,12 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		b_expect = false;
 		b_result = Trees.CIntegerBinaryTree.isComplete(newRoot, 0, 10);
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
 		assertEquals(
 			b_expect,
 			b_result
@@ -562,6 +604,12 @@ public class Datastructures_CBinaryTree_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = true;
+		b_result = Trees.CIntegerBinaryTree.isHeightBalanced(newRoot);
+		assertEquals(
+			b_expect,
+			b_result
+		);
 		
 		intBinaryTree.make(newRoot);
 		i_expect = 11;
@@ -590,6 +638,12 @@ public class Datastructures_CBinaryTree_Test {
 		);
 		b_expect = false;
 		b_result = intBinaryTree.isComplete();
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		b_expect = true;
+		b_result = intBinaryTree.isHeightBalanced();
 		assertEquals(
 			b_expect,
 			b_result

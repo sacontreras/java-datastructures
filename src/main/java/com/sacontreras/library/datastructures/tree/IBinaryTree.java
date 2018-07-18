@@ -15,6 +15,8 @@ public interface IBinaryTree<TData> {
 	//a binary tree T with n levels is complete if all levels except possibly the last are completely full, and the last level has all its nodes to the left side
 	boolean isComplete();
 	
+	boolean isHeightBalanced();
+	
 	void traversePreOrder(final IBinaryTreeTraversalListener<TData> traversalListener);
 	void traverseInOrder(final IBinaryTreeTraversalListener<TData> traversalListener);
 	void traversePostOrder(final IBinaryTreeTraversalListener<TData> traversalListener);

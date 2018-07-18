@@ -1,6 +1,7 @@
 package com.sacontreras.library.datastructures.stack;
 
-import java.lang.reflect.Array;import com.sacontreras.library.BoxedType;
+import com.sacontreras.library.BoxedType;
+import com.sacontreras.library.util.Generics;
 
 public class CArrayStack<TElement> implements IStack<TElement> {
 	
@@ -13,30 +14,29 @@ public class CArrayStack<TElement> implements IStack<TElement> {
 		return top;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public CArrayStack(final int size) {
-		m_array = (BoxedType<TElement>[])(new BoxedType[size]);
+		m_array = Generics.newBoxedTypeArray(size);
 	}
 	public CArrayStack() {
 		this(DEFAULT_SIZE);
 	}
 
 	@Override
-	public void push(TElement e) throws CStackOverflowException {
+	public void push(TElement e) {
 		if (isFull())
 			throw new CStackOverflowException(String.format("top==%d (capacity==%d-1)", top, m_array.length));
 		m_array[++top] = new BoxedType<TElement>(e);
 	}
 	
 	@Override
-	public TElement peek() throws CStackUnderflowException {
+	public TElement peek() {
 		if (isEmpty())
 			throw new CStackUnderflowException("top==-1");
 		return m_array[top].getValue();
 	}
 
 	@Override
-	public TElement pop() throws CStackUnderflowException {
+	public TElement pop() {
 		TElement element = peek();
 		top--;
 		return element;

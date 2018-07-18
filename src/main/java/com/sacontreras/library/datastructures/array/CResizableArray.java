@@ -4,7 +4,7 @@ import com.sacontreras.library.BoxedType;
 import com.sacontreras.library.util.Generics;
 import com.sacontreras.library.util.MathStuff;
 
-public class CResiableArray<TData> {
+public class CResizableArray<TData> {
 	
 	public final static int DEFAULT_CAPACITY = 16;
 	public final static double DEFAULT_LOAD_FACTOR_THRESHOLD = 1.0;
@@ -14,9 +14,8 @@ public class CResiableArray<TData> {
 	
 	private BoxedType<TData>[] ary = null;
     private int load = 0;
-    private double load_factor = 0;
     
-    public CResiableArray(final int capacity, final double load_factor_threshold) {
+    public CResizableArray(final int capacity, final double load_factor_threshold) {
     	if (capacity < 0)
     		throw new ArrayIndexOutOfBoundsException();
     	if (!(0.0 < load_factor_threshold && load_factor_threshold <= 1.0))
@@ -25,13 +24,13 @@ public class CResiableArray<TData> {
     	this.capacity = capacity;
     	this.load_factor_threshold = load_factor_threshold;
     }
-    public CResiableArray(final int capacity) {
+    public CResizableArray(final int capacity) {
     	this(capacity, DEFAULT_LOAD_FACTOR_THRESHOLD);
     }
-    public CResiableArray(final double load_factor) {
+    public CResizableArray(final double load_factor) {
     	this(DEFAULT_CAPACITY, load_factor);
     }
-    public CResiableArray() {
+    public CResizableArray() {
     	this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR_THRESHOLD);
     }
 
@@ -57,10 +56,9 @@ public class CResiableArray<TData> {
     }
     
     public void add(final TData data) {
-    	if (capacity == 0 || load_factor >= load_factor_threshold)
+    	if (capacity == 0 || getLoadFactor() >= load_factor_threshold)
     		resize();
     	ary[load++] = new BoxedType<TData>(data);
-    	load_factor = ((double)load)/((double)capacity);
     }
     
     public void set(final TData data, final int index) {
@@ -70,10 +68,8 @@ public class CResiableArray<TData> {
     		resized = true;
     	}
     	ary[index] = new BoxedType<TData>(data);
-    	if (resized) {
+    	if (resized)
     		load = index;
-    		load_factor = ((double)load)/((double)capacity);
-    	}
     }
     
     public TData get(final int index) {
@@ -84,15 +80,26 @@ public class CResiableArray<TData> {
     	return null;
     }
     
-    public int getLoad() {
+    public TData remove(final int index) {
+    	TData data = get(index);
+    	if (data != null)
+    		ary[load--] = null;
+    	return data;
+    }
+    
+    public int getSize() {
     	return load;
     }
     
     public double getLoadFactor() {
-    	return load_factor;
+    	return ((double)load)/((double)capacity);
     }
     
-    public int getSize() {
+    public double getLoadFactorThreshold() {
+    	return load_factor_threshold;
+    }
+    
+    public int getCapacity() {
     	return capacity;
     }
 }

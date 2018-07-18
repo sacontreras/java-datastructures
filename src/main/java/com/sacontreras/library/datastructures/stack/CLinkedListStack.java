@@ -11,12 +11,12 @@ public class CLinkedListStack<TElement> implements IStack<TElement> {
 	public CLinkedListStack() {}
 
 	@Override
-	public void push(TElement e) throws CStackOverflowException {
+	public void push(TElement e) {
 		ll.prepend(e);
 	}
 
 	@Override
-	public TElement peek() throws CStackUnderflowException {
+	public TElement peek() {
 		TElement element = null;
 		try {
 			element = ll.getStart().next();
@@ -27,7 +27,7 @@ public class CLinkedListStack<TElement> implements IStack<TElement> {
 	}
 
 	@Override
-	public TElement pop() throws CStackUnderflowException {
+	public TElement pop() {
 		final TElement element = peek();
 		ll.removeFirst();;
 		return element;

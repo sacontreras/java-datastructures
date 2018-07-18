@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sacontreras.library.datastructures.array.CResiableArray;
+import com.sacontreras.library.datastructures.array.CResizableArray;
 
 public class Datastructures_CResizableArray_Test {
 
 	@Test
 	@DisplayName("test_CResizableArray")
 	public void test_CResizableArray() {
-		CResiableArray<Integer> int_ary = new CResiableArray<Integer>(0);
+		CResizableArray<Integer> int_ary = new CResizableArray<Integer>(0);
 		
 		int
 			i_expect = 0,
-			i_result = int_ary.getSize();
+			i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
@@ -25,14 +25,14 @@ public class Datastructures_CResizableArray_Test {
 		int times_resized = -1;
 		int_ary.add(0);	//since we start with 0 capacity, first call to add() should result in allocating backing array with DEFAULT_CAPACITY size
 		times_resized++;
-		int new_capacity = (int)(CResiableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//CResiableArray.DEFAULT_CAPACITY
+		int new_capacity = (int)(CResizableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//CResiableArray.DEFAULT_CAPACITY
 		i_expect = new_capacity;
-		i_result = int_ary.getSize();
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		double d_expect = ((double)int_ary.getLoad())/((double)new_capacity);
+		double d_expect = ((double)int_ary.getSize())/((double)new_capacity);
 		double d_result = int_ary.getLoadFactor();
 		assertEquals(
 			d_expect,
@@ -40,10 +40,10 @@ public class Datastructures_CResizableArray_Test {
 		);
 		
 		//fill until load_factor == 1.0
-		for (int i = 1; i < CResiableArray.DEFAULT_CAPACITY; i++)
+		for (int i = 1; i < CResizableArray.DEFAULT_CAPACITY; i++)
 			int_ary.add(i);
 		i_expect = new_capacity;	//still CResiableArray.DEFAULT_CAPACITY, shouldn't have changed
-		i_result = int_ary.getSize();
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
@@ -59,16 +59,16 @@ public class Datastructures_CResizableArray_Test {
 		int_ary.add(-97);	//load_factor should currently be at 1.0, resulting in internal call to resize()
 		times_resized++;	//times_resized==1
 		int prev_capacity = new_capacity;	//was 
-		i_expect = new_capacity = (int)(CResiableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//eval new_capacity==32
+		i_expect = new_capacity = (int)(CResizableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//eval new_capacity==32
 		//size (capacity) of array should now be 32
-		i_result = int_ary.getSize();
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		//load should now be (prev_capacity+1)
 		i_expect = prev_capacity + 1;
-		i_result = int_ary.getLoad();
+		i_result = int_ary.getSize();
 		assertEquals(
 			i_expect,
 			i_result
@@ -76,14 +76,14 @@ public class Datastructures_CResizableArray_Test {
 		
 		int_ary.set(-1, 0);	//this should NOT resize array since we are setting an index below capacity, so we expect current value in new_capacity (not recomputed)
 		i_expect = new_capacity;
-		i_result = int_ary.getSize();
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		//load should still be (prev_capacity+1)
 		i_expect = prev_capacity + 1;
-		i_result = int_ary.getLoad();
+		i_result = int_ary.getSize();
 		assertEquals(
 			i_expect,
 			i_result
@@ -94,8 +94,8 @@ public class Datastructures_CResizableArray_Test {
 		//	4 resizes would amount to a size/capacity of 256, which is what we should have after...
 		int_ary.set(-3233, 255);
 		times_resized = 4;
-		i_expect = new_capacity = (int)(CResiableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//256
-		i_result = int_ary.getSize();
+		i_expect = new_capacity = (int)(CResizableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//256
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result
@@ -109,8 +109,8 @@ public class Datastructures_CResizableArray_Test {
 		
 		int_ary.set(-47, 256);	//should resize to 512
 		times_resized = 5;
-		i_expect = new_capacity = (int)(CResiableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//512
-		i_result = int_ary.getSize();
+		i_expect = new_capacity = (int)(CResizableArray.DEFAULT_CAPACITY * Math.pow(2, times_resized));	//512
+		i_result = int_ary.getCapacity();
 		assertEquals(
 			i_expect,
 			i_result

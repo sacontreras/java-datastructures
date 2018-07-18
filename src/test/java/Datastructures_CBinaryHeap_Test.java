@@ -50,6 +50,13 @@ public class Datastructures_CBinaryHeap_Test {
 			b_expect,
 			b_result
 		);
+		b_expect = true;
+		b_result = int_bin_heap.isHeightBalanced();
+		assertEquals(
+			b_expect,
+			b_result
+		);
+		
 				
 		//manually add items one-by-one from i_ary_expected_preorder ({30, 20, 10, 5, 15, 25, 45, 35, 40, 55, 50})
 		//	this should yield the following insertion iterations:
@@ -162,15 +169,21 @@ public class Datastructures_CBinaryHeap_Test {
 				i_result
 			);
 			
-			//regardless, we always expect a complete tree
+			//regardless, we always expect a complete and height-balanced tree
 			b_expect = true;
 			b_result = int_bin_heap.isComplete();
 			assertEquals(
 				b_expect,
 				b_result
 			);
+			b_expect = true;
+			b_result = int_bin_heap.isHeightBalanced();
+			assertEquals(
+				b_expect,
+				b_result
+			);
 			
-			//ensure heap property
+			//ensure heap (ordering) property
 			//	first add to a collection (so that we may use sorting apis)
 			i_al_expected_preorder.add(val);
 			//	now sort based on natural order
@@ -208,6 +221,7 @@ public class Datastructures_CBinaryHeap_Test {
 		);
 		
 		
+		//expect polling heap to result in-order values
 		final CLinkedListQueue<Integer> q_priority_order = new CLinkedListQueue<Integer>();
 		while (!int_bin_heap.isEmpty() ) {
 			Integer 

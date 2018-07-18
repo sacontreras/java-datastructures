@@ -117,6 +117,22 @@ public class CBinaryTree<TData> implements IBinaryTree<TData> {
 		return isComplete(root, 0, size());
 	}
 	
+	public static <TData>
+	boolean isHeightBalanced(final CBinaryTreeNode<TData> node) {
+		return 
+			node == null ||
+			(
+				isHeightBalanced(node.getLeft()) &&
+				isHeightBalanced(node.getRight()) &&
+				Math.abs(height(node.getLeft()) - height(node.getRight())) <= 1
+			);
+	}
+	
+	@Override
+	public boolean isHeightBalanced() {
+		return isHeightBalanced(root);
+	}
+	
 	
 	
 	
