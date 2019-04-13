@@ -1,6 +1,6 @@
 language: java
 
-jdk: oraclejdk8
+jdk: openjdk10
 
 #this should be all we need
 #according to https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle,
