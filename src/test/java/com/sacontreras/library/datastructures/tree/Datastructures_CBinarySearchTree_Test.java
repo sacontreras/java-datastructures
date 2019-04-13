@@ -1,3 +1,4 @@
+package com.sacontreras.library.datastructures.tree;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Iterator;
@@ -5,34 +6,28 @@ import java.util.Iterator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.sacontreras.library.datastructures.test.mock.Arrays;
-import com.sacontreras.library.datastructures.test.mock.Trees;
-import com.sacontreras.library.datastructures.test.mock.Trees.CIntegerBinarySearchTree;
-import com.sacontreras.library.datastructures.test.mock.Trees.CIntegerBinaryTreeTraversalListener;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPerson;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPersonBinarySearchTree;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPersonBinarySearchTreeTraversalListener;
+import com.sacontreras.library.datastructures.array.MockArrays;
 import com.sacontreras.library.util.Transform;
 
 public class Datastructures_CBinarySearchTree_Test {
 	@Test
 	@DisplayName("test_CBinarySearchTree")
 	public void test_CBinarySearchTree() {
-		Trees.CIntegerBinarySearchTree intBinarySearchTree = Trees.CIntegerBinarySearchTree.fromArray(Arrays.i_ary_expected_preorder);
+		MockTrees.CIntegerBinarySearchTree intBinarySearchTree = MockTrees.CIntegerBinarySearchTree.fromArray(MockArrays.i_ary_expected_preorder);
 
 		
 		//pre-order traversal
-		Trees.CIntegerBinaryTreeTraversalListener intBinarySearchTreeTraversalListener = new Trees.CIntegerBinaryTreeTraversalListener(Trees.CIntegerBinarySearchTree.class.getSimpleName(), "preOrder");
+		MockTrees.CIntegerBinaryTreeTraversalListener intBinarySearchTreeTraversalListener = new MockTrees.CIntegerBinaryTreeTraversalListener(MockTrees.CIntegerBinarySearchTree.class.getSimpleName(), "preOrder");
 		intBinarySearchTree.traversePreOrder(intBinarySearchTreeTraversalListener);
 		Integer[] int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
-		int i_expect = Arrays.i_ary_expected_preorder.length;
+		int i_expect = MockArrays.i_ary_expected_preorder.length;
 		int i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < Arrays.i_ary_expected_preorder.length; i++) {
-			i_expect = Arrays.i_ary_expected_preorder[i];
+		for (int i = 0; i < MockArrays.i_ary_expected_preorder.length; i++) {
+			i_expect = MockArrays.i_ary_expected_preorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -45,14 +40,14 @@ public class Datastructures_CBinarySearchTree_Test {
 		int n = -1;
 		while (iterator_preorder.hasNext()) {
 			n++;
-			i_expect = Arrays.i_ary_expected_preorder[n];
+			i_expect = MockArrays.i_ary_expected_preorder[n];
 			i_result = iterator_preorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = Arrays.i_ary_expected_preorder.length;
+		i_expect = MockArrays.i_ary_expected_preorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
@@ -60,17 +55,17 @@ public class Datastructures_CBinarySearchTree_Test {
 		);
 		
 		//in-order traversal
-		intBinarySearchTreeTraversalListener = new Trees.CIntegerBinaryTreeTraversalListener(Trees.CIntegerBinarySearchTree.class.getSimpleName(), "inOrder");
+		intBinarySearchTreeTraversalListener = new MockTrees.CIntegerBinaryTreeTraversalListener(MockTrees.CIntegerBinarySearchTree.class.getSimpleName(), "inOrder");
 		intBinarySearchTree.traverseInOrder(intBinarySearchTreeTraversalListener);
 		int_ary = Transform.to_array(intBinarySearchTreeTraversalListener.q_visit_order);
-		i_expect = Arrays.i_ary_expected_inorder.length;
+		i_expect = MockArrays.i_ary_expected_inorder.length;
 		i_result = int_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < Arrays.i_ary_expected_inorder.length; i++) {
-			i_expect = Arrays.i_ary_expected_inorder[i];
+		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
+			i_expect = MockArrays.i_ary_expected_inorder[i];
 			i_result = int_ary[i];
 			assertEquals(
 				i_expect,
@@ -83,44 +78,44 @@ public class Datastructures_CBinarySearchTree_Test {
 		n = -1;
 		while (iterator_inorder.hasNext()) {
 			n++;
-			i_expect = Arrays.i_ary_expected_inorder[n];
+			i_expect = MockArrays.i_ary_expected_inorder[n];
 			i_result = iterator_inorder.next();
 			assertEquals(
 				i_expect,
 				i_result
 			);
 		}
-		i_expect = Arrays.i_ary_expected_inorder.length;
+		i_expect = MockArrays.i_ary_expected_inorder.length;
 		i_result = n + 1;
 		assertEquals(
 			i_expect,
 			i_result
 		);
 		
-		intBinarySearchTreeTraversalListener = new Trees.CIntegerBinaryTreeTraversalListener(Trees.CIntegerBinarySearchTree.class.getSimpleName(), "levelOrder");
+		intBinarySearchTreeTraversalListener = new MockTrees.CIntegerBinaryTreeTraversalListener(MockTrees.CIntegerBinarySearchTree.class.getSimpleName(), "levelOrder");
 		intBinarySearchTree.traverseLevelOrder(intBinarySearchTreeTraversalListener);
 	}
 	
 	@Test
 	@DisplayName("test_BinarySearch_not_comparable")
 	public void test_BinarySearch_not_comparable() {
-		Trees.CPersonBinarySearchTree personBinarySearchTree = Trees.CPersonBinarySearchTree.fromArray(Arrays.person_ary_expected_preorder);
+		MockTrees.CPersonBinarySearchTree personBinarySearchTree = MockTrees.CPersonBinarySearchTree.fromArray(MockArrays.person_ary_expected_preorder);
 		
 		//pre-order traversal
-		Trees.CPersonBinarySearchTreeTraversalListener personBinarySearchTreeTraversalListener = new Trees.CPersonBinarySearchTreeTraversalListener("preOrder");
+		MockTrees.CPersonBinarySearchTreeTraversalListener personBinarySearchTreeTraversalListener = new MockTrees.CPersonBinarySearchTreeTraversalListener("preOrder");
 		personBinarySearchTree.traversePreOrder(personBinarySearchTreeTraversalListener);
-		Trees.CPerson[] person_ary = Transform.to_array(personBinarySearchTreeTraversalListener.q_visit_order);
-		int i_expect = Arrays.i_ary_expected_preorder.length;
+		MockTrees.CPerson[] person_ary = Transform.to_array(personBinarySearchTreeTraversalListener.q_visit_order);
+		int i_expect = MockArrays.i_ary_expected_preorder.length;
 		int i_result = person_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		Trees.CPerson 
+		MockTrees.CPerson 
 			p_expect = null,
 			p_result = null;
-		for (int i = 0; i < Arrays.person_ary_expected_preorder.length; i++) {
-			p_expect = Arrays.person_ary_expected_preorder[i];
+		for (int i = 0; i < MockArrays.person_ary_expected_preorder.length; i++) {
+			p_expect = MockArrays.person_ary_expected_preorder[i];
 			p_result = person_ary[i];
 			assertEquals(
 				p_expect,
@@ -129,17 +124,17 @@ public class Datastructures_CBinarySearchTree_Test {
 		}
 		
 		//in-order traversal
-		personBinarySearchTreeTraversalListener = new Trees.CPersonBinarySearchTreeTraversalListener("inOrder");
+		personBinarySearchTreeTraversalListener = new MockTrees.CPersonBinarySearchTreeTraversalListener("inOrder");
 		personBinarySearchTree.traverseInOrder(personBinarySearchTreeTraversalListener);
 		person_ary = Transform.to_array(personBinarySearchTreeTraversalListener.q_visit_order);
-		i_expect = Arrays.person_ary_expected_inorder.length;
+		i_expect = MockArrays.person_ary_expected_inorder.length;
 		i_result = person_ary.length;
 		assertEquals(
 			i_expect,
 			i_result
 		);
-		for (int i = 0; i < Arrays.person_ary_expected_inorder.length; i++) {
-			p_expect = Arrays.person_ary_expected_inorder[i];
+		for (int i = 0; i < MockArrays.person_ary_expected_inorder.length; i++) {
+			p_expect = MockArrays.person_ary_expected_inorder[i];
 			p_result = person_ary[i];
 			assertEquals(
 				p_expect,
@@ -148,11 +143,11 @@ public class Datastructures_CBinarySearchTree_Test {
 		}
 		
 		//post-order traversal
-		personBinarySearchTreeTraversalListener = new Trees.CPersonBinarySearchTreeTraversalListener("postOrder");
+		personBinarySearchTreeTraversalListener = new MockTrees.CPersonBinarySearchTreeTraversalListener("postOrder");
 		personBinarySearchTree.traversePostOrder(personBinarySearchTreeTraversalListener);
 		
 		//level-order traversal
-		personBinarySearchTreeTraversalListener = new Trees.CPersonBinarySearchTreeTraversalListener("levelOrder");
+		personBinarySearchTreeTraversalListener = new MockTrees.CPersonBinarySearchTreeTraversalListener("levelOrder");
 		personBinarySearchTree.traverseLevelOrder(personBinarySearchTreeTraversalListener);
 		
 		//TODO: add remaining traversal validation

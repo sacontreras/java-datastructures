@@ -1,4 +1,4 @@
-package com.sacontreras.library.datastructures.test.mock;
+package com.sacontreras.library.datastructures.tree;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,12 +6,8 @@ import java.util.Comparator;
 import java.util.Date;
 
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
-import com.sacontreras.library.datastructures.tree.CBinarySearchTree;
-import com.sacontreras.library.datastructures.tree.CBinaryTree;
-import com.sacontreras.library.datastructures.tree.CBinaryTreeNode;
-import com.sacontreras.library.datastructures.tree.IBinaryTreeTraversalListener;
 
-public class Trees {
+public class MockTrees {
 
 	public static class CIntegerBinaryTreeNode extends CBinaryTreeNode<Integer> {
 		public CIntegerBinaryTreeNode(int i) {

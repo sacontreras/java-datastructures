@@ -1,3 +1,4 @@
+package com.sacontreras.library.algorithms.strings.reverse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +14,7 @@ public class Utils_Strings_Test {
         String 
         	s_test = "Hello World!", 
         	s_expect = new StringBuilder(s_test).reverse().toString(),
-        	s_result = StringUtils.bitwise_swap_chars(s_test);
+        	s_result = new BitwiseCharacterSwapStringReverser().reverse(s_test);
       
         assertEquals(
     		s_expect,

@@ -1,15 +1,16 @@
-package com.sacontreras.library.datastructures.test.mock;
+package com.sacontreras.library.datastructures.heap;
 
 import com.sacontreras.library.datastructures.heap.CBinaryHeap;
 import com.sacontreras.library.datastructures.heap.IBinaryHeapTraversalListener;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
+import com.sacontreras.library.datastructures.tree.MockTrees;
 
-public class Heaps {
+public class MockHeaps {
 
 	public static class CIntegerBinaryHeap extends CBinaryHeap<Integer> {
 	
 		public CIntegerBinaryHeap() {
-			super(new Trees.CIntegerComparator());
+			super(new MockTrees.CIntegerComparator());
 		}
 		
 		public static CIntegerBinaryHeap fromArray(final Integer[] ary_data) {

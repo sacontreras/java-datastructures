@@ -1,16 +1,19 @@
-import com.sacontreras.library.CKeyValuePair;
-import com.sacontreras.library.datastructures.hashtable.CChainedHashTable;
-import com.sacontreras.library.datastructures.hashtable.ChainedHashTableKeyHasher;
-import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
-import com.sacontreras.library.datastructures.test.mock.KVPs;
-import com.sacontreras.library.util.MathStuff;
-import com.sacontreras.library.util.StringUtils;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+package com.sacontreras.library.datastructures.hashtable;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.sacontreras.library.CKeyValuePair;
+import com.sacontreras.library.datastructures.common.KVPs;
+import com.sacontreras.library.datastructures.hashtable.CChainedHashTable;
+import com.sacontreras.library.datastructures.hashtable.ChainedHashTableKeyHasher;
+import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
+import com.sacontreras.library.util.MathStuff;
+import com.sacontreras.library.util.StringUtils;
 
 public class Datastructures_CChainedHashTable_Test {
 

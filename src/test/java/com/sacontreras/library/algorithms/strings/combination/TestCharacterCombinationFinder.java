@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.sacontreras.library.base.TestCaseData;
-
-import com.sacontreras.library.base.TestCaseDataStreamBuilder;
+import com.sacontreras.library.common.TestCaseData;
+import com.sacontreras.library.common.TestCaseDataStreamBuilder;
 
 
 public class TestCharacterCombinationFinder {

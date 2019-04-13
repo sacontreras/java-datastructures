@@ -1,3 +1,5 @@
+package com.sacontreras.library.datastructures.heap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -8,16 +10,15 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.sacontreras.library.datastructures.array.MockArrays;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
-import com.sacontreras.library.datastructures.test.mock.Arrays;
-import com.sacontreras.library.datastructures.test.mock.Heaps;
 
 public class Datastructures_CBinaryHeap_Test {
 	
 	@Test
 	@DisplayName("test_CBinaryHeap")
 	public void test_CBinaryHeap() {
-		Heaps.CIntegerBinaryHeap int_bin_heap = new Heaps.CIntegerBinaryHeap();
+		MockHeaps.CIntegerBinaryHeap int_bin_heap = new MockHeaps.CIntegerBinaryHeap();
 		boolean 
 			b_expect = true,
 			b_result = int_bin_heap.isEmpty();
@@ -151,15 +152,15 @@ public class Datastructures_CBinaryHeap_Test {
 		// 35    40 55   50
 		
 		
-		Heaps.CIntegerBinaryHeapTraversalListener traversalListener = null;
+		MockHeaps.CIntegerBinaryHeapTraversalListener traversalListener = null;
 		ArrayList<Integer> i_al_expected_preorder = new ArrayList<Integer>();
 		List<Integer> i_list_expected_inorder = null;
-		for (int i = 0; i < Arrays.i_ary_expected_preorder.length; i++) {
-			int val = Arrays.i_ary_expected_preorder[i];
+		for (int i = 0; i < MockArrays.i_ary_expected_preorder.length; i++) {
+			int val = MockArrays.i_ary_expected_preorder[i];
 			int_bin_heap.add(val);
 			
 			//so we can visualize its structure after add (after bubbleup)
-			traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener(String.format("CIntegerBinaryHeap-post-add-iteration-%d", i), "tree-levelOrder");
+			traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener(String.format("CIntegerBinaryHeap-post-add-iteration-%d", i), "tree-levelOrder");
 			int_bin_heap.traverseLevelOrder(traversalListener);
 			
 			i_expect = i + 1;
@@ -221,13 +222,13 @@ public class Datastructures_CBinaryHeap_Test {
 		);
 		
 		//for curiosity's sake... let's traverse since we confirmed heap is not empty
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
 		int_bin_heap.traverseLevelOrder(traversalListener);
 		
 		//expect polling heap to result in-order values
@@ -242,7 +243,7 @@ public class Datastructures_CBinaryHeap_Test {
 		i_expect = -1;
 		i_result = -1;
 		while (!q_priority_order.isEmpty()) {
-			i_expect = Arrays.i_ary_expected_inorder[n];
+			i_expect = MockArrays.i_ary_expected_inorder[n];
 			i_result = q_priority_order.poll();
 			assertEquals(
 				i_expect,
@@ -252,7 +253,7 @@ public class Datastructures_CBinaryHeap_Test {
 		}
 		
 		//for curiosity's sake... heap should be empty since we polled it (till empty)
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-inOrder");
 		int_bin_heap.traverseInOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -260,7 +261,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-preOrder");
 		int_bin_heap.traversePreOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -268,7 +269,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-postOrder");
 		int_bin_heap.traversePostOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();
@@ -276,7 +277,7 @@ public class Datastructures_CBinaryHeap_Test {
 			i_expect,
 			i_result
 		);
-		traversalListener = new Heaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
+		traversalListener = new MockHeaps.CIntegerBinaryHeapTraversalListener("CIntegerBinaryHeap", "tree-levelOrder");
 		int_bin_heap.traverseLevelOrder(traversalListener);
 		i_expect = 0;
 		i_result = traversalListener.q_visit_order.getSize();

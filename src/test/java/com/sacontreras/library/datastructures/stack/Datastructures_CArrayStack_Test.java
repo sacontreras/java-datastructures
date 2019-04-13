@@ -1,14 +1,11 @@
-import org.junit.jupiter.api.Test;
+package com.sacontreras.library.datastructures.stack;
 
-import com.sacontreras.library.datastructures.stack.CArrayStack;
-import com.sacontreras.library.datastructures.stack.CStackOverflowException;
-import com.sacontreras.library.datastructures.stack.CStackUnderflowException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class Datastructures_CArrayStack_Test {
 	
