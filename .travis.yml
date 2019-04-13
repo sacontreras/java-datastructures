@@ -7,4 +7,4 @@ jdk: openjdk10
 # If your project contains a build.gradle file in the repository root, Travis CI builds your project with Gradle:
 #   gradle check    (gradle check runs gradle test and gradle junitPlatformTest tasks)
 # If your project also includes the gradlew wrapper script in the repository root, Travis CI uses that wrapper instead:
-#   ./gradlew check
+#   ./gradlew clean test --info
