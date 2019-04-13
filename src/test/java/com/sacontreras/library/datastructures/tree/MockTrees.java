@@ -38,13 +38,13 @@ public class MockTrees {
 		
 		@Override
 		public void onNodeVisted(Integer data, DISPOSITION disp, Integer data_parent) {
-			System.out.println(String.format("%s::onNodeVisted-%s: value: %d, disp: %s, (node) predecessor: %s", tag, order, data, disp.name(), data_parent));
+			//System.out.println(String.format("%s::onNodeVisted-%s: value: %d, disp: %s, (node) predecessor: %s", tag, order, data, disp.name(), data_parent));
 			q_visit_order.enqueue(data);
 		}
 	
 		@Override
 		public void onNullNode() {
-			System.out.println(String.format("%s::onNullNode-%s", tag, order));
+			//System.out.println(String.format("%s::onNullNode-%s", tag, order));
 		}
 	}
 
@@ -134,25 +134,25 @@ public class MockTrees {
 		
 		@Override
 		public void onNodeVisted(CPerson person, DISPOSITION disp, CPerson person_parent) {
-			System.out.println(
-				String.format(
-					"CPersonBinarySearchTreeTraversalListener::onNodeVisted-%s: person: %s, %s, %tF; disp: %s; (node) predecessor: %s, %s, %tF", 
-					order, 
-					person.lastname, 
-					person.firstname, 
-					person.birthdate,
-					disp.name(),
-					person_parent != null ? person_parent.lastname : null,
-					person_parent != null ? person_parent.firstname : null, 
-					person_parent != null ? person_parent.birthdate : null
-				)
-			);
+			//System.out.println(
+//				String.format(
+//					"CPersonBinarySearchTreeTraversalListener::onNodeVisted-%s: person: %s, %s, %tF; disp: %s; (node) predecessor: %s, %s, %tF", 
+//					order, 
+//					person.lastname, 
+//					person.firstname, 
+//					person.birthdate,
+//					disp.name(),
+//					person_parent != null ? person_parent.lastname : null,
+//					person_parent != null ? person_parent.firstname : null, 
+//					person_parent != null ? person_parent.birthdate : null
+//				)
+//			);
 			q_visit_order.enqueue(person);
 		}
 	
 		@Override
 		public void onNullNode() {
-			//System.out.println(String.format("CIntegerBinarySearchTreeTraversalListener::onNullNode-%s", order));
+			////System.out.println(String.format("CIntegerBinarySearchTreeTraversalListener::onNullNode-%s", order));
 		}
 	}
 

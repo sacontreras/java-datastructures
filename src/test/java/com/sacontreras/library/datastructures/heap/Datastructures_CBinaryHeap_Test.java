@@ -236,7 +236,7 @@ public class Datastructures_CBinaryHeap_Test {
 		while (!int_bin_heap.isEmpty() ) {
 			Integer 
 				val = int_bin_heap.poll();
-			System.out.println(String.format("CIntegerBinaryHeap::poll: %d", val));
+			//System.out.println(String.format("CIntegerBinaryHeap::poll: %d", val));
 			q_priority_order.enqueue(val);
 		}
 		int n = 0;

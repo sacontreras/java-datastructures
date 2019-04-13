@@ -52,11 +52,11 @@ public class MergeSort {
 	}
 	public final static <TData> 
 	TData[] execute(final TData[] ary, final Comparator<TData> comparator) {
-        System.out.println(String.format(""));
+//        System.out.println(String.format(""));
 
 		int len = ary.length;
-		System.out.println(String.format("MergeSort.execute: ary.length = %d", len));
-        System.out.println(String.format("MergeSort.execute: ary = %s", Arrays.toString(ary)));
+//		System.out.println(String.format("MergeSort.execute: ary.length = %d", len));
+//        System.out.println(String.format("MergeSort.execute: ary = %s", Arrays.toString(ary)));
 
 		if (len == 1 ) {
             return ary;
@@ -64,18 +64,18 @@ public class MergeSort {
 		
 		//split ary in half - divide and conquer
 		int m = len/2;	//int div rounds down, which means if (tdata_ary.length mod 2) > 0, then the second half will contain the extra element
-        System.out.println(String.format("MergeSort.execute: m = %d", m));
+//        System.out.println(String.format("MergeSort.execute: m = %d", m));
 		
 		TData[] ary_left = Generics.<TData>newArray(ary[0], m);
 		for (int i = 0; i < m; i++)
 			ary_left[i] = ary[i];
-        System.out.println(String.format("MergeSort.execute: ary_left = %s", Arrays.toString(ary_left)));
+//        System.out.println(String.format("MergeSort.execute: ary_left = %s", Arrays.toString(ary_left)));
 		ary_left = execute(ary_left, comparator);
 		
 		TData[] ary_right = Generics.<TData>newArray(ary[0], len - m);
 		for (int i = m; i < len; i++)
 			ary_right[i - m] = ary[i];
-        System.out.println(String.format("MergeSort.execute: ary_right = %s", Arrays.toString(ary_right)));
+//        System.out.println(String.format("MergeSort.execute: ary_right = %s", Arrays.toString(ary_right)));
 		ary_right = execute(ary_right, comparator);
 
         return sortmerge(ary_left, ary_right, comparator);
@@ -99,7 +99,7 @@ public class MergeSort {
 
 		TData l_val, r_val;
 
-        System.out.println(String.format("MergeSort.sortmerge: ary_left = %s, ary_right = %s", Arrays.toString(ary_left), Arrays.toString(ary_right)));
+        //System.out.println(String.format("MergeSort.sortmerge: ary_left = %s, ary_right = %s", Arrays.toString(ary_left), Arrays.toString(ary_right)));
 		
 		TData[] ary_merged = Generics.<TData>newArray(ary_left[0], len_left + len_right);
 		
@@ -109,18 +109,18 @@ public class MergeSort {
 		    result = r_val.compareTo(l_val);
 			if (result < 0) {
 			    //r_val < l_val
-                System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) > ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
+                //System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) > ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
 				ary_merged[n_merged++] = r_val;
 				trans_len_right--;
 				trans_first_right++;
 			} else {
                 //r_val >= l_val
-                System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) <= ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
+                //System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) <= ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
 				ary_merged[n_merged++] = l_val;
 				trans_len_left--;
 				trans_first_left++;
 			}
-            System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
+            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
 		}
 		
 		//remnants in left will automatically be in order, after ary_merged[n_merged-1], by virtue of ordered sorting/merge done above
@@ -128,7 +128,7 @@ public class MergeSort {
 			ary_merged[n_merged++] = ary_left[trans_first_left];
 			trans_len_left--;
 			trans_first_left++;
-            System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
+            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
 		}
 		
 		//same goes for remnants in right half  
@@ -136,7 +136,7 @@ public class MergeSort {
 			ary_merged[n_merged++] = ary_right[trans_first_right];
 			trans_len_right--;
 			trans_first_right++;
-            System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
+            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
 		}
 		
 		return ary_merged;

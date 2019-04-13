@@ -21,7 +21,7 @@ public class CResizableArray<TData> {
     	if (!(0.0f < load_factor_threshold && load_factor_threshold <= 1.0f))
     		throw new IllegalArgumentException();
     	backing_array = Generics.newBoxedTypeArray(capacity);
-        System.out.printf("CResizableArray::ctor: backing_array[] allocated with capacity (size): %d\n", backing_array.length);
+        //System.out.printf("CResizableArray::ctor: backing_array[] allocated with capacity (size): %d\n", backing_array.length);
     	this.capacity = capacity;
     	this.load_factor_threshold = load_factor_threshold;
     }
@@ -46,27 +46,27 @@ public class CResizableArray<TData> {
     		int times_resized = (int)(MathStuff.getInstance().log_b(basis, 2) - MathStuff.getInstance().log_b(DEFAULT_CAPACITY, 2));
     		new_capacity = DEFAULT_CAPACITY * (int)Math.pow(2, times_resized + 1);
     	}
-        System.out.printf("CResizableArray::resize: allocating new_backing_array with capacity: %d\n", new_capacity);
+        //System.out.printf("CResizableArray::resize: allocating new_backing_array with capacity: %d\n", new_capacity);
     	BoxedType<TData>[] new_backing_array = Generics.newBoxedTypeArray(new_capacity);
     	for (int i = 0; i < load; i++)
     		new_backing_array[i] = backing_array[i];
-        System.out.printf("CResizableArray::resize: set elements at indexes 0 through %d of new_backing_array to those from backing_array\n", load-1);
+        //System.out.printf("CResizableArray::resize: set elements at indexes 0 through %d of new_backing_array to those from backing_array\n", load-1);
     	capacity = new_capacity;
     	backing_array = new_backing_array;
-        System.out.printf("CResizableArray::resize: new_backing_array assigned to backing_array\n", load);
+        //System.out.printf("CResizableArray::resize: new_backing_array assigned to backing_array\n", load);
     }
     private void resize() {
     	resize(capacity);
     }
     
     public void add(final TData data) {
-        System.out.printf("CResizableArray::add: setting backing_array[%d] ...\n", load);
+        //System.out.printf("CResizableArray::add: setting backing_array[%d] ...\n", load);
     	if (capacity == 0 || getLoadFactor() >= load_factor_threshold) {
             resize();
-            System.out.printf("CResizableArray::add: backing_array[] now has capacity: %d\n", backing_array.length);
+            //System.out.printf("CResizableArray::add: backing_array[] now has capacity: %d\n", backing_array.length);
         }
     	backing_array[load++] = new BoxedType<TData>(data);
-        System.out.printf("CResizableArray::add: backing_array[%d] == " + data + "\n", load-1);
+        //System.out.printf("CResizableArray::add: backing_array[%d] == " + data + "\n", load-1);
     }
     
     public void set(final TData data, final int index) {

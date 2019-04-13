@@ -85,10 +85,10 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
         else {
             //get smallest DEFAULT_CAPACITY * 2^n > basis; we must solve for n, then add 1; log2(DEFAULT_CAPACITY * 2^n) > log2 (basis) --> log2 (DEFAULT_CAPACITY) + log2 (2^n) > log2 (basis) --> n > log2 (basis) - log2 (DEFAULT_CAPACITY)
             int times_resized = (int)(MathStuff.getInstance().log_b(basis, 2) - MathStuff.getInstance().log_b(DEFAULT_CAPACITY, 2));
-            System.out.println(String.format("CChainedHashTable::rehash: times_resized==%d", times_resized));
+            //System.out.println(String.format("CChainedHashTable::rehash: times_resized==%d", times_resized));
             new_capacity = DEFAULT_CAPACITY * (int)Math.pow(2, times_resized + 1);
         }
-        System.out.println(String.format("CChainedHashTable::rehash: set new_capacity==%d", new_capacity));
+        //System.out.println(String.format("CChainedHashTable::rehash: set new_capacity==%d", new_capacity));
 
         BoxedType<CLinkedList<CKeyValuePair<TKey, TValue>>>[] new_backing_array = Generics.newBoxedTypeArray(new_capacity);
         for (int i = 0; i < new_capacity; i++)
@@ -127,7 +127,7 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
         CLinkedList<CKeyValuePair<TKey, TValue>> kvp_chain = get_chain(hash_val);
 
         if (kvp_chain != null) {
-            System.out.println(String.format("CChainedHashTable::put: found kvp chain for hash value %d", hash_val));
+            //System.out.println(String.format("CChainedHashTable::put: found kvp chain for hash value %d", hash_val));
             //now check to see if the kvp we are attempting to add already exists in the chain
             int n = 0;
             for (CKeyValuePair<TKey, TValue> kvp_hash_match : kvp_chain) {
@@ -135,7 +135,7 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
                     //match
                     TValue old_Val = kvp_hash_match.getValue();
                     if (value != null) {
-                        System.out.println(String.format("CChainedHashTable::put: kvp already exists for key: \"%s\" (old val: \"%s\", new val: \"%s\")", key, old_Val, value));
+                        //System.out.println(String.format("CChainedHashTable::put: kvp already exists for key: \"%s\" (old val: \"%s\", new val: \"%s\")", key, old_Val, value));
                         try {
                             kvp_chain.set(n, new CKeyValuePair<TKey, TValue>(key, value));
                             return true;
@@ -144,7 +144,7 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
                             return false;
                         }
                     } else {
-                        System.out.println(String.format("CChainedHashTable::put: kvp already exists for key: \"%s\" (cannot replace old val: \"%s\" with null)", key, old_Val));
+                        //System.out.println(String.format("CChainedHashTable::put: kvp already exists for key: \"%s\" (cannot replace old val: \"%s\" with null)", key, old_Val));
                         return false;
                     }
                 }
@@ -153,12 +153,12 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
             //okay, a bucket exists already for this hash, but there is no kvp in the chain for this value, proceed...
         }
 
-        //System.out.println(String.format("CChainedHashTable::put: no kvp chain exists hash value %d", hasher.hash(key, this)));
+        ////System.out.println(String.format("CChainedHashTable::put: no kvp chain exists hash value %d", hasher.hash(key, this)));
         float load_factor = getLoadFactor();
-        System.out.println(String.format("CChainedHashTable::put: capacity is %d, load is %d --> load_factor==%f; load_factor_threshold==%f", capacity, load, load_factor, load_factor_threshold));
+        //System.out.println(String.format("CChainedHashTable::put: capacity is %d, load is %d --> load_factor==%f; load_factor_threshold==%f", capacity, load, load_factor, load_factor_threshold));
         //check load factor threshold first to determine if we need a new bucket
         if (capacity == 0 || load_factor >= load_factor_threshold) {
-            System.out.println(String.format("CChainedHashTable::put: capacity == 0 || load_factor (%f) >= load_factor_threshold (%f) --> resizing!", load_factor, load_factor_threshold));
+            //System.out.println(String.format("CChainedHashTable::put: capacity == 0 || load_factor (%f) >= load_factor_threshold (%f) --> resizing!", load_factor, load_factor_threshold));
             rehash();
         }
 
@@ -169,13 +169,13 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
         }
 
         //now add this kvp to kvp_chain
-        System.out.println(String.format("CChainedHashTable::put: putting kvp key==\"%s\", val==\"%s\" in kvp chain at index (hash val) %d", key, value, hash_val));
+        //System.out.println(String.format("CChainedHashTable::put: putting kvp key==\"%s\", val==\"%s\" in kvp chain at index (hash val) %d", key, value, hash_val));
         kvp_chain.append(kvp);
-        System.out.println(String.format("CChainedHashTable::put: this kvp chain is %d elements in size", kvp_chain.getSize()));
+        //System.out.println(String.format("CChainedHashTable::put: this kvp chain is %d elements in size", kvp_chain.getSize()));
 
         //don't forget to increment load!!!
         load++;
-        System.out.println(String.format("CChainedHashTable::put: load is now %d", load));
+        //System.out.println(String.format("CChainedHashTable::put: load is now %d", load));
 
         return true;
     }

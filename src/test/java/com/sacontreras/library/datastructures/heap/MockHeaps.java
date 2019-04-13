@@ -36,13 +36,13 @@ public class MockHeaps {
 		
 		@Override
 		public void onNodeVisted(int i_node, Integer node_data, DISPOSITION disp, int i_parent, Integer parent_data) {
-			System.out.println(String.format("%s::onNodeVisted-%s: index: %d, value: %d, disp: %s, parent-index: %d, parent-value: %d", tag, order, i_node, node_data, disp.name(), i_parent, parent_data));
+			//System.out.println(String.format("%s::onNodeVisted-%s: index: %d, value: %d, disp: %s, parent-index: %d, parent-value: %d", tag, order, i_node, node_data, disp.name(), i_parent, parent_data));
 			q_visit_order.enqueue(node_data);	
 		}
 	
 		@Override
 		public void onNullNode(int i_node) {
-			//System.out.println(String.format("%s::onNullNode-%s: index: %d", tag, order, i_node));
+			////System.out.println(String.format("%s::onNullNode-%s: index: %d", tag, order, i_node));
 		}
 	}
 

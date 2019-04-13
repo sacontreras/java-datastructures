@@ -26,9 +26,9 @@ public class Datastructures_CChainedHashTable_Test {
                 value += ((long) bytes[i] & 0xffL) << (8 * i);
             }
             value = Math.abs(value);
-            //System.out.println(String.format("CChainedHashTableStringKeyHasher::hash: bytes to val for key \"%s\" is %d", key, value));
+            ////System.out.println(String.format("CChainedHashTableStringKeyHasher::hash: bytes to val for key \"%s\" is %d", key, value));
             long hashval = (value % (long)modulus);
-            //System.out.println(String.format("CChainedHashTableStringKeyHasher::%d mod %d == %d", value, modulus, hashval));
+            ////System.out.println(String.format("CChainedHashTableStringKeyHasher::%d mod %d == %d", value, modulus, hashval));
             return (int)hashval;
         }
     }
@@ -39,10 +39,10 @@ public class Datastructures_CChainedHashTable_Test {
         int n = 0;
         CLinkedList<CKeyValuePair<TKey, TVal>> kvp_chain = null;
         while ((kvp_chain = it.next()) != null) {
-            System.out.println(String.format("dump_hashtable: \tkvp_chain[%d]: %d nodes", n, kvp_chain.getSize()));
+            //System.out.println(String.format("dump_hashtable: \tkvp_chain[%d]: %d nodes", n, kvp_chain.getSize()));
             int m = 0;
             for (CKeyValuePair<TKey, TVal> kvp: kvp_chain) {
-                System.out.println(String.format("dump_hashtable: \t\t[%d]: key==\"%s\", val==\"%s\"", m, kvp.getKey(), kvp.getValue()));
+                //System.out.println(String.format("dump_hashtable: \t\t[%d]: key==\"%s\", val==\"%s\"", m, kvp.getKey(), kvp.getValue()));
                 m++;
             }
             n++;
@@ -142,7 +142,7 @@ public class Datastructures_CChainedHashTable_Test {
         );
 
         //this section does not contribute to the test - it merely dumps the contents of the hashtable
-        System.out.println(String.format("test_CChainedHashTable_loadfactor_resize: all done! chainedHashTable has %d chains with %d total items; iterating items!", chainedHashTable.bucket_count(), chainedHashTable.getSize()));
+        //System.out.println(String.format("test_CChainedHashTable_loadfactor_resize: all done! chainedHashTable has %d chains with %d total items; iterating items!", chainedHashTable.bucket_count(), chainedHashTable.getSize()));
         dump_hashtable(chainedHashTable);
     }
 
@@ -158,10 +158,10 @@ public class Datastructures_CChainedHashTable_Test {
         for (int i = 0; i < KVPs.ary_kvp_ssn_name_expected_inorder.length; i++) {
             kvp = KVPs.ary_kvp_ssn_name_expected_inorder[i].getValue();
             chainedHashTable.put(kvp.getKey(), kvp.getValue());
-            System.out.println(String.format("test_CChainedHashTable_operations: chainedHashTable size==%d, load==%d, load_factor==%f", chainedHashTable.getSize(), chainedHashTable.getCapacity(), chainedHashTable.getLoadFactor()));
+            //System.out.println(String.format("test_CChainedHashTable_operations: chainedHashTable size==%d, load==%d, load_factor==%f", chainedHashTable.getSize(), chainedHashTable.getCapacity(), chainedHashTable.getLoadFactor()));
 
             val = chainedHashTable.get(kvp.getKey());
-            System.out.println(String.format("test_CChainedHashTable_operations -- post-insert-inline-retrieval validation: val for key \"%s\" is \"%s\"", kvp.getKey(), val));
+            //System.out.println(String.format("test_CChainedHashTable_operations -- post-insert-inline-retrieval validation: val for key \"%s\" is \"%s\"", kvp.getKey(), val));
             assertEquals(kvp.getValue(), val);
         }
 
@@ -169,7 +169,7 @@ public class Datastructures_CChainedHashTable_Test {
         for (int i = 0; i < KVPs.ary_kvp_ssn_name_expected_inorder.length; i++) {
             kvp = KVPs.ary_kvp_ssn_name_expected_inorder[i].getValue();
             val = chainedHashTable.get(kvp.getKey());
-            System.out.println(String.format("test_CChainedHashTable_operations -- post-batch-insert-retrieval validation: val for key \"%s\" is \"%s\"", kvp.getKey(), val));
+            //System.out.println(String.format("test_CChainedHashTable_operations -- post-batch-insert-retrieval validation: val for key \"%s\" is \"%s\"", kvp.getKey(), val));
             assertEquals(kvp.getValue(), val);
         }
 
@@ -180,7 +180,7 @@ public class Datastructures_CChainedHashTable_Test {
         assertEquals(kvp.getValue().toLowerCase(), val);
 
         //now just dump
-        System.out.println(String.format("test_CChainedHashTable_operations: all done! chainedHashTable has %d chains with %d total items; iterating items!", chainedHashTable.bucket_count(), chainedHashTable.getSize()));
+        //System.out.println(String.format("test_CChainedHashTable_operations: all done! chainedHashTable has %d chains with %d total items; iterating items!", chainedHashTable.bucket_count(), chainedHashTable.getSize()));
         dump_hashtable(chainedHashTable);
     }
 }
