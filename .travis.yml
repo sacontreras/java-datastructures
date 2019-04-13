@@ -8,4 +8,4 @@ jdk: openjdk10
 #   gradle check    (gradle check runs gradle test and gradle junitPlatformTest tasks)
 # If your project also includes the gradlew wrapper script in the repository root, Travis CI uses that wrapper instead:
 script:
-  - ./gradlew clean test --debug
+  - ./gradlew clean test --info

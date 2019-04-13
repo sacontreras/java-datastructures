@@ -1,6 +1,5 @@
 package com.sacontreras.library.algorithms.sort;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
@@ -143,8 +142,11 @@ public class MergeSort {
 	}
 	public final static <TData extends Comparable<TData>> 
 	TData[] execute(final TData[] ary) {
+		if (ary == null)
+			throw new NullPointerException("ary cannot be null");
+		
 		int len = ary.length;
-		if (len == 1 )
+		if (len <= 1)
 			return ary;
 		
 		//split ary in half - divide and conquer
