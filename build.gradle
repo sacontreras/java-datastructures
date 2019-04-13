@@ -11,17 +11,12 @@ buildscript {
     	jcenter()
         mavenCentral()
     }
-    dependencies {
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
-    }
 }
 
 apply plugin: 'java'
 
 apply plugin: 'application'
 mainClassName = 'com.sacontreras.practice.datastructures.Main'
-
-apply plugin: 'org.junit.platform.gradle.plugin'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -31,6 +26,12 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+}
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     //api 'org.apache.commons:commons-math3:3.6.1'
@@ -38,12 +39,9 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
 
-    // Use JUnit test framework
-    //testImplementation 'junit:junit:4.12'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitversion}"
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: "${junitversion}"
     
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'	//junit 5.1.0 for access to assertException
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
-    
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "5.${junit5MinorVersion}"
-    testCompile group: 'org.junit.platform', name: 'junit-platform-launcher', version: "1.${junit5MinorVersion}"
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitversion}"
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: "${junitplatform}"
 }

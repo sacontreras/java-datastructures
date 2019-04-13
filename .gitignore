@@ -1,1 +1,8 @@
 org.eclipse.buildship.core.prefs
+datastructures.eml
+datastructures.userlibraries
+.idea
+.metadata
+.settings
+classes
+datastructures_main.eml

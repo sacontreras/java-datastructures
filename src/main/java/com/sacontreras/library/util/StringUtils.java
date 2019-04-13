@@ -1,5 +1,6 @@
 package com.sacontreras.library.util;
 
+//import com.sacontreras.library.datastructures.hashtable.CChainedHashTable;
 import com.sacontreras.library.datastructures.stack.CArrayStack;
 import com.sacontreras.library.datastructures.stack.CLinkedListStack;
 import com.sacontreras.library.datastructures.stack.CStackOverflowException;
@@ -93,4 +94,26 @@ final public class StringUtils {
 			}
 			return i_ary;
 		}
+
+		final public static String gen_random_string(final int len) {
+            StringBuilder sb = new StringBuilder();
+            int which_set = 0;
+            char c = 0;
+            for (int j = 0; j < len; j++) {
+                which_set = MathStuff.getInstance().randomIntVal(0, 2);
+                switch (which_set) {
+                    case 0: //numbers
+                        c = (char)MathStuff.getInstance().randomIntVal(48, 57);
+                        break;
+                    case 1: //ucase
+                        c = (char)MathStuff.getInstance().randomIntVal(65, 90);
+                        break;
+                    default:    //lcase
+                        c = (char)MathStuff.getInstance().randomIntVal(97, 122);
+                        break;
+                }
+                sb.append(c);
+            }
+            return sb.toString();
+        }
 	}

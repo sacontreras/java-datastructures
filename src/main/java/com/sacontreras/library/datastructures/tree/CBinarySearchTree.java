@@ -58,7 +58,7 @@ public class CBinarySearchTree<TData> extends CBinaryTree<TData> {
             else if (comparison > 0) {
             	root_node = make(root_node, root_node.left, node);
             } else
-                return new CAddResult<TData>(root_node, false);   //node is already in the tree
+                return new CAddResult<TData>(root_node, false);   //node is already in the tree - but we should update value
         }
         return new CAddResult<TData>(root_node, true);        
     }

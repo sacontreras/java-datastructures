@@ -1,7 +1,4 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.text.ParseException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,12 +7,6 @@ import com.sacontreras.library.algorithms.sort.MergeSort;
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
 import com.sacontreras.library.datastructures.test.mock.Arrays;
 import com.sacontreras.library.datastructures.test.mock.Trees;
-import com.sacontreras.library.datastructures.test.mock.Trees.CIntegerBinarySearchTree;
-import com.sacontreras.library.datastructures.test.mock.Trees.CIntegerBinaryTreeTraversalListener;
-import com.sacontreras.library.datastructures.test.mock.Trees.CIntegerComparator;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPerson;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPersonBinarySearchTree;
-import com.sacontreras.library.datastructures.test.mock.Trees.CPersonBinarySearchTreeTraversalListener;
 import com.sacontreras.library.util.Transform;
 
 public class Algorithms_MergeSort_Test {
@@ -24,8 +15,8 @@ public class Algorithms_MergeSort_Test {
 	@DisplayName("test_MergeSort")
 	public void test_MergeSort() {
 		Trees.CIntegerBinarySearchTree intBinarySearchTree = Trees.CIntegerBinarySearchTree.fromArray(Arrays.i_ary_expected_preorder);
-		
-		///in-order traversal
+
+        ///in-order traversal
 		Trees.CIntegerBinaryTreeTraversalListener traversalListener = new Trees.CIntegerBinaryTreeTraversalListener(Trees.CIntegerBinarySearchTree.class.getSimpleName(), "inOrder");
 		intBinarySearchTree.traverseInOrder(traversalListener);
 		Integer[] int_ary = Transform.to_array(traversalListener.q_visit_order);
