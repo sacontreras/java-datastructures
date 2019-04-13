@@ -1,5 +1,7 @@
 package com.sacontreras.library.algorithms.sort;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 import com.sacontreras.library.datastructures.queue.CLinkedListQueue;
@@ -7,162 +9,120 @@ import com.sacontreras.library.util.Generics;
 
 public class MergeSort {
 	
-	//array of data that does not need to be inherently comparable... the comparator takes care of this for us
 	private final static <TData>
-	TData[] sortmerge(final TData[] ary_left, final TData[] ary_right, final Comparator<TData> comparator) {
-		int 
-		len_left = ary_left.length,
-		trans_len_left = len_left,
-		len_right = ary_right.length,
-		trans_len_right = len_right,
-		trans_first_left = 0,
-		trans_first_right = 0,
-		n_merged = 0;
-	
-		TData[] ary_merged = Generics.<TData>newArray(ary_left[0], len_left + len_right);
+	void execute(TData[] ary, TData[] temp, int left, int right, final Comparator<TData> comparator) {
+		if (right > left) {
+			int mid = (left + right)/2;
+			execute(ary, temp, left, mid, comparator);
+			execute(ary, temp, mid + 1, right, comparator);
+			sortmerge(ary, temp, left, mid + 1, right, comparator);
+		}
+	}
+	private final static <TData>
+	void sortmerge(TData[] ary, TData[] temp, int left, int mid, int right, final Comparator<TData> comparator) {
+		int left_end, size, temp_pos;
 		
-		while (trans_len_left > 0 && trans_len_right > 0) {
-			if (comparator.compare(ary_right[trans_first_right], ary_left[trans_first_left]) < 0) {
-				ary_merged[n_merged++] = ary_right[trans_first_right];
-				trans_len_right--;
-				trans_first_right++;
+		temp_pos = left;
+		left_end = mid - 1;
+		//right_start = mid + 1;
+		size = right - left + 1;
+		
+		while (left <= left_end && mid <= right) {
+			if (comparator.compare(ary[left], ary[mid]) <= 0) {
+				temp[temp_pos] = ary[left];
+				temp_pos += 1;	//move temp_pos to the right by one
+				left += 1;		//also move left endpoint to the right by one
 			} else {
-				ary_merged[n_merged++] = ary_left[trans_first_left];
-				trans_len_left--;
-				trans_first_left++;
+				temp[temp_pos] = ary[mid];
+				temp_pos += 1;	//move temp_pos to the right by one
+				mid += 1;		//move mid to the right by one
 			}
 		}
 		
-		//remnants in left will automatically be in order, after ary_merged[n_merged-1], by virtue of ordered sorting/merge done above
-		while (trans_len_left > 0) {
-			ary_merged[n_merged++] = ary_left[trans_first_left];
-			trans_len_left--;
-			trans_first_left++;
+		while (left <= left_end) {
+			temp[temp_pos] = ary[left];
+			left += 1;		//also move left endpoint to the right by one
+			temp_pos += 1; 	//move temp_pos to the right by one
 		}
 		
-		//same goes for remnants in right half  
-		while (trans_len_right > 0) {
-			ary_merged[n_merged++] = ary_right[trans_first_right];
-			trans_len_right--;
-			trans_first_right++;
+		while (mid <= right) {
+			temp[temp_pos] = ary[mid];
+			mid += 1;		//move mid to the right by one
+			temp_pos += 1; 	//move temp_pos to the right by one
 		}
 		
-		return ary_merged;
+		for (int i = 0; i < size; i++) {
+			ary[right] = temp[right];
+			right -= 1;
+		}
 	}
-	public final static <TData> 
-	TData[] execute(final TData[] ary, final Comparator<TData> comparator) {
-//        System.out.println(String.format(""));
-
-		int len = ary.length;
-//		System.out.println(String.format("MergeSort.execute: ary.length = %d", len));
-//        System.out.println(String.format("MergeSort.execute: ary = %s", Arrays.toString(ary)));
-
-		if (len == 1) {
-            return ary;
-        }
-		
-		//split ary in half - divide and conquer
-		int m = len/2;	//int div rounds down, which means if (tdata_ary.length mod 2) > 0, then the second half will contain the extra element
-//        System.out.println(String.format("MergeSort.execute: m = %d", m));
-		
-		TData[] ary_left = Generics.<TData>newArray(ary[0], m);
-		for (int i = 0; i < m; i++)
-			ary_left[i] = ary[i];
-//        System.out.println(String.format("MergeSort.execute: ary_left = %s", Arrays.toString(ary_left)));
-		ary_left = execute(ary_left, comparator);
-		
-		TData[] ary_right = Generics.<TData>newArray(ary[0], len - m);
-		for (int i = m; i < len; i++)
-			ary_right[i - m] = ary[i];
-//        System.out.println(String.format("MergeSort.execute: ary_right = %s", Arrays.toString(ary_right)));
-		ary_right = execute(ary_right, comparator);
-
-        return sortmerge(ary_left, ary_right, comparator);
-	}
-	
-	
-	
-	
-	//for array with comparable data
-	private final static <TData extends Comparable<TData>>
-	TData[] sortmerge(final TData[] ary_left, final TData[] ary_right) {
-		int 
-			len_left = ary_left.length,
-			trans_len_left = len_left,
-			len_right = ary_right.length,
-			trans_len_right = len_right,
-			trans_first_left = 0,
-			trans_first_right = 0,
-			n_merged = 0,
-            result = 0;
-
-		TData l_val, r_val;
-
-        //System.out.println(String.format("MergeSort.sortmerge: ary_left = %s, ary_right = %s", Arrays.toString(ary_left), Arrays.toString(ary_right)));
-		
-		TData[] ary_merged = Generics.<TData>newArray(ary_left[0], len_left + len_right);
-		
-		while (trans_len_left > 0 && trans_len_right > 0) {
-		    r_val = ary_right[trans_first_right];
-		    l_val = ary_left[trans_first_left];
-		    result = r_val.compareTo(l_val);
-			if (result < 0) {
-			    //r_val < l_val
-                //System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) > ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
-				ary_merged[n_merged++] = r_val;
-				trans_len_right--;
-				trans_first_right++;
-			} else {
-                //r_val >= l_val
-                //System.out.println(String.format("MergeSort.sortmerge: ary_left[%d] (%s) <= ary_right[%d] (%s)", trans_first_left, l_val, trans_first_right, r_val));
-				ary_merged[n_merged++] = l_val;
-				trans_len_left--;
-				trans_first_left++;
-			}
-            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
-		}
-		
-		//remnants in left will automatically be in order, after ary_merged[n_merged-1], by virtue of ordered sorting/merge done above
-		while (trans_len_left > 0) {
-			ary_merged[n_merged++] = ary_left[trans_first_left];
-			trans_len_left--;
-			trans_first_left++;
-            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
-		}
-		
-		//same goes for remnants in right half  
-		while (trans_len_right > 0) {
-			ary_merged[n_merged++] = ary_right[trans_first_right];
-			trans_len_right--;
-			trans_first_right++;
-            //System.out.println(String.format("MergeSort.sortmerge: ary_merged = %s", Arrays.toString(ary_merged)));
-		}
-		
-		return ary_merged;
-	}
-	public final static <TData extends Comparable<TData>> 
-	TData[] execute(final TData[] ary) {
+	public final static <TData>
+	void execute(TData[] ary, final Comparator<TData> comparator) {
 		if (ary == null)
 			throw new NullPointerException("ary cannot be null");
+		if (ary.length == 0)
+			return;
+		TData[] temp = Generics.<TData>newArray(ary[0], ary.length);
+		Arrays.fill(temp, Collections.min(Arrays.asList(ary), comparator));
+		execute(ary, temp, 0, ary.length - 1, comparator);
+	}
+	
+	private final static <TData extends Comparable<TData>>
+	void execute(TData[] ary, TData[] temp, int left, int right) {
+		if (right > left) {
+			int mid = (left + right)/2;
+			execute(ary, temp, left, mid);
+			execute(ary, temp, mid + 1, right);
+			sortmerge(ary, temp, left, mid + 1, right);
+		}
+	}
+	private final static <TData extends Comparable<TData>>
+	void sortmerge(TData[] ary, TData[] temp, int left, int mid, int right) {
+		int left_end, size, temp_pos;
 		
-		int len = ary.length;
-		if (len <= 1)
-			return ary;
+		temp_pos = left;
+		left_end = mid - 1;
+		//right_start = mid + 1;
+		size = right - left + 1;
 		
-		//split ary in half - divide and conquer
-		int m = len/2;	//int div rounds down, which means if (tdata_ary.length mod 2) > 0, then the second half will contain the extra element
+		while (left <= left_end && mid <= right) {
+			if (ary[left].compareTo(ary[mid]) <= 0) {
+				temp[temp_pos] = ary[left];
+				temp_pos += 1;	//move temp_pos to the right by one
+				left += 1;		//also move left endpoint to the right by one
+			} else {
+				temp[temp_pos] = ary[mid];
+				temp_pos += 1;	//move temp_pos to the right by one
+				mid += 1;		//move mid to the right by one
+			}
+		}
 		
-		TData[] ary_left = Generics.<TData>newArray(ary[0], m);
-		for (int i = 0; i < m; i++)
-			ary_left[i] = ary[i];
-		ary_left = execute(ary_left);
+		while (left <= left_end) {
+			temp[temp_pos] = ary[left];
+			left += 1;		//also move left endpoint to the right by one
+			temp_pos += 1; 	//move temp_pos to the right by one
+		}
 		
-		TData[] ary_right = Generics.<TData>newArray(ary[0], len - m);
-		for (int i = m; i < len; i++)
-			ary_right[i - m] = ary[i];
-		ary_right = execute(ary_right);
+		while (mid <= right) {
+			temp[temp_pos] = ary[mid];
+			mid += 1;		//move mid to the right by one
+			temp_pos += 1; 	//move temp_pos to the right by one
+		}
 		
-		return sortmerge(ary_left, ary_right);
+		for (int i = 0; i < size; i++) {
+			ary[right] = temp[right];
+			right -= 1;
+		}
+	}
+	public final static <TData extends Comparable<TData>>
+	void execute(TData[] ary) {
+		if (ary == null)
+			throw new NullPointerException("ary cannot be null");
+		if (ary.length == 0)
+			return;
+		TData[] temp = Generics.<TData>newArray(ary[0], ary.length);
+		Arrays.fill(temp, Collections.min(Arrays.asList(ary)));
+		execute(ary, temp, 0, ary.length - 1);
 	}
 	
 	

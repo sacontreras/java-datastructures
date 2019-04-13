@@ -55,7 +55,8 @@ public class Algorithms_MergeSort_Test {
 	@ParameterizedTest(name = "testMergeSortOnArrayWithZeroOrOneElementShouldReturnOriginal[{index}] on {0}")
 	@MethodSource("emptyOrOneElementTestCaseDataProvider")
 	void testMergeSortOnArrayWithZeroOrOneElementShouldReturnOriginal(MergeSortTestCaseData testCaseData) {
-		Integer[] sorted = MergeSort.<Integer>execute(testCaseData.unsorted);
+		Integer[] sorted = Arrays.copyOf(testCaseData.unsorted, testCaseData.unsorted.length);
+		MergeSort.<Integer>execute(sorted);
 		Assertions.assertArrayEquals(testCaseData.sorted, sorted);
 	}
 	
@@ -69,73 +70,8 @@ public class Algorithms_MergeSort_Test {
 	@ParameterizedTest(name = "testMergeSortOnRegularUnsortedArrayShouldReturnSorted[{index}] on {0}")
 	@MethodSource("regularTestCaseDataProvider")
 	void testMergeSortOnRegularUnsortedArrayShouldReturnSorted(MergeSortTestCaseData testCaseData) {
-		Integer[] sorted = MergeSort.<Integer>execute(testCaseData.unsorted);
+		Integer[] sorted = Arrays.copyOf(testCaseData.unsorted, testCaseData.unsorted.length);
+		MergeSort.<Integer>execute(sorted);
 		Assertions.assertArrayEquals(testCaseData.sorted, sorted);
 	}
-	
-
-	
-	
-	//these are all old and defunct - both the implementation and tests will be refactored
-//	@Test
-//	@DisplayName("test_MergeSort")
-//	public void test_MergeSort() {
-//		MockTrees.CIntegerBinarySearchTree intBinarySearchTree = MockTrees.CIntegerBinarySearchTree
-//				.fromArray(MockArrays.i_ary_expected_preorder);
-//
-//		/// in-order traversal
-//		MockTrees.CIntegerBinaryTreeTraversalListener traversalListener = new MockTrees.CIntegerBinaryTreeTraversalListener(
-//				MockTrees.CIntegerBinarySearchTree.class.getSimpleName(), "inOrder");
-//		intBinarySearchTree.traverseInOrder(traversalListener);
-//		Integer[] int_ary = Transform.to_array(traversalListener.q_visit_order);
-//		int i_expect = MockArrays.i_ary_expected_inorder.length;
-//		int i_result = int_ary.length;
-//		assertEquals(i_expect, i_result);
-//		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
-//			i_expect = MockArrays.i_ary_expected_inorder[i];
-//			i_result = int_ary[i];
-//			assertEquals(i_expect, i_result);
-//		}
-//
-//		// now sort i_ary_expected_preorder using mergesort and expect
-//		// i_ary_expected_inorder values...
-//
-//		// ... using array and comparator (data need not be inherently comparable in
-//		// this case... the comparator takes care of this for us)
-//		MockTrees.CIntegerComparator binarysearchcomparator = new MockTrees.CIntegerComparator();
-//		Integer[] ary_expected_preorder__sorted_inorder = MergeSort.<Integer>execute(MockArrays.i_ary_expected_preorder,
-//				binarysearchcomparator);
-//		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
-//			i_expect = MockArrays.i_ary_expected_inorder[i];
-//			i_result = ary_expected_preorder__sorted_inorder[i];
-//			assertEquals(i_expect, i_result);
-//		}
-//
-//		// ...using queue and comparator (data need not be inherently comparable in this
-//		// case... the comparator takes care of this for us)
-//		CLinkedListQueue<Integer> q_expected_preorder__sorted_inorder = MergeSort
-//				.<Integer>execute(Transform.to_queue(MockArrays.i_ary_expected_preorder), binarysearchcomparator);
-//		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
-//			i_expect = MockArrays.i_ary_expected_inorder[i];
-//			i_result = q_expected_preorder__sorted_inorder.poll();
-//			assertEquals(i_expect, i_result);
-//		}
-//
-//		// ...using array of comparables
-//		ary_expected_preorder__sorted_inorder = MergeSort.<Integer>execute(MockArrays.i_ary_expected_preorder);
-//		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
-//			i_expect = MockArrays.i_ary_expected_inorder[i];
-//			i_result = ary_expected_preorder__sorted_inorder[i];
-//			assertEquals(i_expect, i_result);
-//		}
-//
-//		// ...using queue of comparables
-//		q_expected_preorder__sorted_inorder = MergeSort
-//				.<Integer>execute(Transform.to_queue(MockArrays.i_ary_expected_preorder));
-//		for (int i = 0; i < MockArrays.i_ary_expected_inorder.length; i++) {
-//			i_expect = MockArrays.i_ary_expected_inorder[i];
-//			i_result = q_expected_preorder__sorted_inorder.poll();
-//			assertEquals(i_expect, i_result);
-//		}
-//	}
 }
