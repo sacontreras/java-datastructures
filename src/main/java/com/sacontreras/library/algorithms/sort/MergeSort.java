@@ -57,7 +57,7 @@ public class MergeSort {
 //		System.out.println(String.format("MergeSort.execute: ary.length = %d", len));
 //        System.out.println(String.format("MergeSort.execute: ary = %s", Arrays.toString(ary)));
 
-		if (len == 1 ) {
+		if (len == 1) {
             return ary;
         }
 		
