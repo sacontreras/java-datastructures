@@ -1,11 +1,11 @@
 language: java
-
 jdk: openjdk10
 
-#this should be all we need
-#according to https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle,
-# If your project contains a build.gradle file in the repository root, Travis CI builds your project with Gradle:
-#   gradle check    (gradle check runs gradle test and gradle junitPlatformTest tasks)
-# If your project also includes the gradlew wrapper script in the repository root, Travis CI uses that wrapper instead:
+addons:
+  sonarcloud:
+    organization: "sacontreras-github" # the key of the org you chose at step #3
+
+#see https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle,
 script:
-  - ./gradlew check test --info
+ # - ./gradlew check test --info
+  - sonar-scanner

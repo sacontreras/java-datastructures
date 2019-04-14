@@ -13,9 +13,12 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
+plugins {
+    id "java"
+    id "application"
+    id "org.sonarqube" version "2.7"
+}
 
-apply plugin: 'application'
 mainClassName = 'com.sacontreras.practice.datastructures.Main'
 
 // In this section you declare where to find the dependencies of your project
