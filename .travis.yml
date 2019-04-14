@@ -8,5 +8,5 @@ addons:
 #see https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle,
 script:
   - ./gradlew check test --info
-  - ls
+  - ls ./build
   - sonar-scanner
