@@ -3,7 +3,7 @@ package com.sacontreras.library.datastructures.linkedlist;
 import java.util.Iterator;
 
 //based on https://en.wikibooks.org/wiki/Data_Structures/List_Structures
-public interface ILinkedList<TData> extends Iterable<TData> {
+public interface LinkedList<TData> extends Iterable<TData> {
 	//returns the list iterator that represents the first element of the list. runs in O(1) time.
 	Iterator<TData> getStart();
 	
@@ -29,10 +29,10 @@ public interface ILinkedList<TData> extends Iterable<TData> {
 	int getSize();
 	
 	//returns the nth element in the list, counting from 0. Has a default implementation. runs in O(N) time.
-	TData get(int n) throws CLinkedListException;
+	TData get(int n) throws LinkedListException;
 	
 	//assigns a new value to the nth element in the list, counting from 0. runs in O(N) time.
-	void set(int n, TData data) throws CLinkedListException;
+	void set(int n, TData data) throws LinkedListException;
 	
 	//for convenience...
 	TData getFirst();

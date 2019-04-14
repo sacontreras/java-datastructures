@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
-import com.sacontreras.library.datastructures.linkedlist.CLinkedListException;
+import com.sacontreras.library.datastructures.linkedlist.LinkedListException;
 
 public class Datastructures_CLinkedList_Test {
 	private char 
@@ -39,8 +39,8 @@ public class Datastructures_CLinkedList_Test {
 			b_result
 		);
 		
-		CLinkedListException e1 = assertThrows(
-			CLinkedListException.class,
+		LinkedListException e1 = assertThrows(
+			LinkedListException.class,
 			() -> {
 				Character c = ll.get(0);
 			}
@@ -50,8 +50,8 @@ public class Datastructures_CLinkedList_Test {
 			e1.getMessage()
 		);
 		
-		CLinkedListException e2 = assertThrows(
-			CLinkedListException.class,
+		LinkedListException e2 = assertThrows(
+			LinkedListException.class,
 			() -> {
 				ll.set(0, 'b');
 			}
@@ -108,7 +108,7 @@ public class Datastructures_CLinkedList_Test {
 					c_expect,
 					c_result
 				);
-			} catch (CLinkedListException e) {
+			} catch (LinkedListException e) {
 				e.printStackTrace();
 				fail(String.format("encountered CLinkedListException(\"%s\") when we should not have", e.getMessage()));
 			}
@@ -137,7 +137,7 @@ public class Datastructures_CLinkedList_Test {
 				c_ary_expected[2],
 				c_result
 			);
-		} catch (CLinkedListException e) {
+		} catch (LinkedListException e) {
 			e.printStackTrace();
 			fail(String.format("encountered CLinkedListException(\"%s\") when we should not have", e.getMessage()));
 		}
@@ -182,7 +182,7 @@ public class Datastructures_CLinkedList_Test {
 						c_expect,
 						c_result
 					);
-				} catch (CLinkedListException e) {
+				} catch (LinkedListException e) {
 					e.printStackTrace();
 					fail(String.format("encountered CLinkedListException(\"%s\") when we should not have", e.getMessage()));
 				}
@@ -235,7 +235,7 @@ public class Datastructures_CLinkedList_Test {
 					c_expect,
 					c_result
 				);
-			} catch (CLinkedListException e) {
+			} catch (LinkedListException e) {
 				e.printStackTrace();
 				fail(String.format("encountered CLinkedListException(\"%s\") when we should not have", e.getMessage()));
 			}
@@ -281,7 +281,7 @@ public class Datastructures_CLinkedList_Test {
 						c_expect,
 						c_result
 					);
-				} catch (CLinkedListException e) {
+				} catch (LinkedListException e) {
 					e.printStackTrace();
 					fail(String.format("encountered CLinkedListException(\"%s\") when we should not have", e.getMessage()));
 				}

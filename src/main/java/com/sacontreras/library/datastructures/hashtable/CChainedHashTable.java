@@ -3,7 +3,7 @@ package com.sacontreras.library.datastructures.hashtable;
 import com.sacontreras.library.BoxedType;
 import com.sacontreras.library.CKeyValuePair;
 import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
-import com.sacontreras.library.datastructures.linkedlist.CLinkedListException;
+import com.sacontreras.library.datastructures.linkedlist.LinkedListException;
 import com.sacontreras.library.util.Generics;
 import com.sacontreras.library.util.MathStuff;
 import java.util.Iterator;
@@ -139,7 +139,7 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
                         try {
                             kvp_chain.set(n, new CKeyValuePair<TKey, TValue>(key, value));
                             return true;
-                        } catch (CLinkedListException e) {
+                        } catch (LinkedListException e) {
                             e.printStackTrace();
                             return false;
                         }

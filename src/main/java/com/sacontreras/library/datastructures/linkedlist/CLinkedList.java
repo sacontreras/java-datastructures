@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 //based on https://en.wikibooks.org/wiki/Data_Structures/List_Structures
-public class CLinkedList<TData> implements ILinkedList<TData> {
+public class CLinkedList<TData> implements LinkedList<TData> {
 	
 	public static class Node<TData> {
 		private TData data;
@@ -148,16 +148,16 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 		return n;
 	}
 	
-	private Node<TData> getNode(final int n) throws CLinkedListException {
+	private Node<TData> getNode(final int n) throws LinkedListException {
 		if (n < 0)
-			throw new CLinkedListException(String.format("Index %d out of bounds", n));
+			throw new LinkedListException(String.format("Index %d out of bounds", n));
 		Node<TData> current = head;
 		if (current == null)
-			throw new CLinkedListException("linkedlist is empty");
+			throw new LinkedListException("linkedlist is empty");
 		int i = 0; //since we are at head
 		while (n > i++) {
 			if (current.next_node == null)
-				throw new CLinkedListException(String.format("Index %d out of bounds", n));
+				throw new LinkedListException(String.format("Index %d out of bounds", n));
 			else
 				current = current.next_node;
 		}
@@ -165,12 +165,12 @@ public class CLinkedList<TData> implements ILinkedList<TData> {
 	}
 
 	@Override
-	public TData get(int n) throws CLinkedListException {
+	public TData get(int n) throws LinkedListException {
 		return getNode(n).data;
 	}
 
 	@Override
-	public void set(int n, TData data) throws CLinkedListException {
+	public void set(int n, TData data) throws LinkedListException {
 		getNode(n).data = data;
 	}
 	
