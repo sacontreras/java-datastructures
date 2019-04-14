@@ -16,6 +16,7 @@ buildscript {
 plugins {
     id "java"
     id "application"
+    id "jacoco"
     id "org.sonarqube" version "2.7"
 }
 
