@@ -1,16 +1,10 @@
 package com.sacontreras.library.algorithms.interview;
 
+import com.sacontreras.library.algorithms.strings.reverse.CharacterSwapStringReverser;
+import com.sacontreras.library.algorithms.strings.reverse.StringReverser;
+
 public class StringUtil {
-	public static char[] reverse(char[] s) {
-		int len = s.length;
-		for (int i = 0; i < len/2; i++) {
-			int swappos = len - 1 - i;
-			char swap = s[swappos];
-			s[swappos] = s[i];
-			s[i]= swap; 
-		}
-		return s;
-	}
+	private static StringReverser stringReverser = new CharacterSwapStringReverser();
 	
 	public static boolean isPalindrome(String s) {
 		String s2 = s.toLowerCase();
@@ -23,7 +17,7 @@ public class StringUtil {
 		}
 		String s2Stripped = sb.toString();
 		System.out.printf("isPalindrome: \"%s\" stripped: \"%s\"\n", s, s2Stripped);
-		String s2StrippedAndReversed = new String(reverse(s2Stripped.toCharArray()));
+		String s2StrippedAndReversed = new String(stringReverser.reverse(new String(s2Stripped.toCharArray())));
 		System.out.printf("isPalindrome: \"%s\" reversed: \"%s\"\n", s2Stripped, s2StrippedAndReversed);
 		return s2StrippedAndReversed.equals(s2Stripped);
 	}
@@ -31,7 +25,7 @@ public class StringUtil {
 	public static boolean isPalindromeV2(String s) {
 		String s2Stripped = s.toLowerCase().replaceAll("[^a-z]+", "");
 		System.out.printf("isPalindromeV2: \"%s\" stripped: \"%s\"\n", s, s2Stripped);
-		String s2StrippedAndReversed = new String(reverse(s2Stripped.toCharArray()));
+		String s2StrippedAndReversed = new String(stringReverser.reverse(new String(s2Stripped.toCharArray())));
 		System.out.printf("isPalindromeV2: \"%s\" reversed: \"%s\"\n", s2Stripped, s2StrippedAndReversed);
 		return s2StrippedAndReversed.equals(s2Stripped);
 	}
