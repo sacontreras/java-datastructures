@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.sacontreras.library.common.TestCaseData;
 import com.sacontreras.library.common.TestCaseDataStreamBuilder;
 
-public class TestInplaceArrayMergeSorter {
+public class TestArrayMergeSorter {
 	private static class MergeSortTestCaseData implements TestCaseData {
 		public final ArrayMergeSorter<Integer> mergeSorterImpl;
 		public final Integer[] unsorted;
@@ -101,6 +101,6 @@ public class TestInplaceArrayMergeSorter {
 	void testMergeSortOnRegularUnsortedArrayShouldReturnSorted(MergeSortTestCaseData testCaseData) {
 		Integer[] sorted = Arrays.copyOf(testCaseData.unsorted, testCaseData.unsorted.length);
 		testCaseData.mergeSorterImpl.mergeSort(sorted);
-		Assertions.assertArrayEquals(testCaseData.sorted, sorted);
+		Assertions.assertArrayEquals(testCaseData.sorted, sorted, String.format("Expected: %s, GOT: %s", Arrays.toString(testCaseData.sorted), Arrays.toString(sorted)));
 	}
 }

@@ -1,10 +1,8 @@
 package com.sacontreras.library.algorithms.sort.mergesort.array;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
-public class InplaceIncomparableArrayMergeSorter<TData, TComparator extends Comparator<TData>>
-		implements IncomparableArrayMergeSorter<TData, TComparator> {
+public class InplaceIncomparableArrayMergeSorter<TData, TComparator extends Comparator<TData>> implements IncomparableArrayMergeSorter<TData, TComparator> {
 
 	@Override
 	public void mergeSort(TData[] ary, TComparator comparator) {
@@ -12,54 +10,72 @@ public class InplaceIncomparableArrayMergeSorter<TData, TComparator extends Comp
 			throw new NullPointerException("ary cannot be null");
 		if (ary.length == 0)
 			return;
-		TData[] temp = Arrays.copyOf(ary, ary.length);
-		mergeSort(ary, temp, 0, ary.length - 1, comparator);
+		mergeSort(ary, 0, ary.length-1, comparator);
 	}
-
-	private void mergeSort(TData[] ary, TData[] temp, int left, int right, final Comparator<TData> comparator) {
-		if (right > left) {
-			int mid = (left + right) / 2;
-			mergeSort(ary, temp, left, mid, comparator);
-			mergeSort(ary, temp, mid + 1, right, comparator);
-			sortmerge(ary, temp, left, mid + 1, right, comparator);
-		}
+	
+	//this function applies Divide and Conquer
+	private void mergeSort(TData[] ary, int lbound, int rbound, TComparator comparator) {
+		//this is a recursive function, so we need a base case
+		if (lbound == rbound)	//then we have sub-divided ary until the point that the current sub-array contains only a single element
+			return;
+			
+		//otherwise, sub-divide ary,	
+		//e.g. {74, 4, -12, 8, 9, 7, 2, 0}		should produce the following logical subdivisions
+		//		  |				 |
+		//{-74, 4, -12, 8}	{9, 7, 2, 0}
+		//	  |   	   |	  |		  |
+		//{-74, 4} {-12, 8}	 {9, 7}   {2, 0}
+		//  |    |   |    |   |   |    |  |
+		//{-74} {4} {-12} {8} {9} {7} {2} {0}
+		
+		//first step is to find the index that will sub-divide ary into two logical partitions
+		int lpartEnd = (lbound + rbound)/2;	//note that since this is an int, we will implicitly round down
+		
+		//now recursively partition ary into left and right sub-arrays
+		//left partition will consist of elements from ary ranging from indexes lbound to lpartEnd
+		mergeSort(ary, lbound, lpartEnd, comparator);
+		//right partition will consist of elements from ary ranging from indexes lpartEnd+1 to rbound
+		mergeSort(ary, lpartEnd+1, rbound, comparator);
+		
+		//now we need to sort/merge the left and right partitions
+		sortMerge(ary, lbound, lpartEnd, rbound, comparator);
 	}
-
-	private void sortmerge(TData[] ary, TData[] temp, int left, int mid, int right,
-			final Comparator<TData> comparator) {
-		int left_end, size, temp_pos;
-
-		temp_pos = left;
-		left_end = mid - 1;
-		size = right - left + 1;
-
-		while (left <= left_end && mid <= right) {
-			if (comparator.compare(ary[left], ary[mid]) <= 0) {
-				temp[temp_pos] = ary[left];
-				temp_pos += 1; // move temp_pos to the right by one
-				left += 1; // also move left endpoint to the right by one
-			} else {
-				temp[temp_pos] = ary[mid];
-				temp_pos += 1; // move temp_pos to the right by one
-				mid += 1; // move mid to the right by one
+	
+	private void sortMerge(TData[] ary, int lbound, int leftpartEnd, int rbound, TComparator comparator) {
+		//pivot on left partition first
+		int inspectPos = lbound;
+		int rightpartPos = leftpartEnd+1;		
+		while (inspectPos < leftpartEnd+1) {
+			if (comparator.compare(ary[inspectPos], ary[rightpartPos]) > 0) {	//then item in left partition is greater than item in right partition
+				//so swap items
+				TData swap = ary[inspectPos];
+				ary[inspectPos] = ary[rightpartPos];
+				ary[rightpartPos] = swap;	
+			}
+			if (rightpartPos < rbound)
+				rightpartPos++;
+			else {
+				inspectPos++;
+				rightpartPos = leftpartEnd+1;
 			}
 		}
-
-		while (left <= left_end) {
-			temp[temp_pos] = ary[left];
-			left += 1; // also move left endpoint to the right by one
-			temp_pos += 1; // move temp_pos to the right by one
-		}
-
-		while (mid <= right) {
-			temp[temp_pos] = ary[mid];
-			mid += 1; // move mid to the right by one
-			temp_pos += 1; // move temp_pos to the right by one
-		}
-
-		for (int i = 0; i < size; i++) {
-			ary[right] = temp[right];
-			right -= 1;
+		
+		//now reconcile right partition
+		inspectPos = leftpartEnd+1;
+		rightpartPos = leftpartEnd+2;
+		while (inspectPos < rbound) {
+			if (comparator.compare(ary[inspectPos], ary[rightpartPos]) > 0) {
+				//so swap items
+				TData swap = ary[inspectPos];
+				ary[inspectPos] = ary[rightpartPos];
+				ary[rightpartPos] = swap;	
+			} 
+			if (rightpartPos < rbound)
+				rightpartPos++;
+			else {
+				inspectPos++;
+				rightpartPos = inspectPos+1;
+			}
 		}
 	}
 }
