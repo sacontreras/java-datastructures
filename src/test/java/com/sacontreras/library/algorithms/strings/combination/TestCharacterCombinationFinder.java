@@ -43,7 +43,7 @@ public class TestCharacterCombinationFinder {
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		combinationFinderImpls = new ArrayList<>() {{
-			add(new BacktrackingCharacterCombinationFinder());
+			add(new CCharacterCombinationFinder());
 		}};
 	}
 	
@@ -85,6 +85,7 @@ public class TestCharacterCombinationFinder {
 
 		@Override
 		public void OnCharacterCombinationFound(String string, String combination) {
+			System.out.printf("\"%s\" combination found: \"%s\"\n", string, combination);
 			TreeSet<String> combinations = stringCombinationsMap.get(string);
 			if (combinations == null) {
 				combinations = new TreeSet<>();
@@ -111,31 +112,52 @@ public class TestCharacterCombinationFinder {
 	
 	
 	
-//	private static Stream<CharacterCombinationTestCaseData> validStringTestCaseDataProvider() {
-//		CharacterCombinationTestCaseDataStreamBuilder testCaseDataStreamBuilder = new CharacterCombinationTestCaseDataStreamBuilder(combinationFinderImpls);
-//		
-//		testCaseDataStreamBuilder.add(
-//			"a", 
-//			new TreeSet<String>(){{
-//				add("a");
-//			}}
-//		);
-//		testCaseDataStreamBuilder.add(
-//			"ab", 
-//			new TreeSet<String>(){{
-//				add("a");
-//				add("ab");
-//			}}
-//		);
-//		
-//		return testCaseDataStreamBuilder.build();
-//	}
-//	@ParameterizedTest(name = "testFindCharacterCombinationationsOnValidStringShouldReturnExpectedCombinationsSet[{index}] on {0}")
-//	@MethodSource("validStringTestCaseDataProvider")
-//	void testFindCharacterCombinationationsOnValidStringShouldReturnExpectedCombinationsSet(CharacterCombinationTestCaseData testCaseData) {
-//		TreeSetBuilderCharacterCombinationFinderListener listener = new TreeSetBuilderCharacterCombinationFinderListener();
-//		testCaseData.characterCombinationFinder.findCharacterCombination(testCaseData.string, listener);
-//		TreeSet<String> combinations = listener.stringCombinationsMap.get(testCaseData.string);
-//		Assertions.assertEquals(testCaseData.combinations, combinations, String.format("GOT: %s", combinations));
-//	}
+	private static Stream<CharacterCombinationTestCaseData> validStringTestCaseDataProvider() {
+		CharacterCombinationTestCaseDataStreamBuilder testCaseDataStreamBuilder = new CharacterCombinationTestCaseDataStreamBuilder(combinationFinderImpls);
+		
+		testCaseDataStreamBuilder.add(
+			"a", 
+			new TreeSet<String>(){{
+				add("a");
+			}}
+		);
+		testCaseDataStreamBuilder.add(
+			"ab", 
+			new TreeSet<String>(){{
+				//2-choose-1
+				add("a");
+				add("b");
+				
+				//2-choose-2
+				add("ab");
+			}}
+		);
+		testCaseDataStreamBuilder.add(
+			"abc", 
+			new TreeSet<String>(){{
+				//3-choose-1
+				add("a");
+				add("b");
+				add("c");
+				
+				//3-choose-2
+				add("ab");
+				add("ac");
+				add("bc");
+				
+				//3-choose-1
+				add("abc");
+			}}
+		);
+		
+		return testCaseDataStreamBuilder.build();
+	}
+	@ParameterizedTest(name = "testFindCharacterCombinationationsOnValidStringShouldReturnExpectedCombinationsSet[{index}] on {0}")
+	@MethodSource("validStringTestCaseDataProvider")
+	void testFindCharacterCombinationationsOnValidStringShouldReturnExpectedCombinationsSet(CharacterCombinationTestCaseData testCaseData) {
+		TreeSetBuilderCharacterCombinationFinderListener listener = new TreeSetBuilderCharacterCombinationFinderListener();
+		testCaseData.characterCombinationFinder.findCharacterCombination(testCaseData.string, listener);
+		TreeSet<String> combinations = listener.stringCombinationsMap.get(testCaseData.string);
+		Assertions.assertEquals(testCaseData.combinations, combinations, String.format("GOT: %s", combinations));
+	}
 }

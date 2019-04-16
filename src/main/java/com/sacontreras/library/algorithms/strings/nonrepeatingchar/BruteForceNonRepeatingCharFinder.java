@@ -2,7 +2,6 @@ package com.sacontreras.library.algorithms.strings.nonrepeatingchar;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 
 public class BruteForceNonRepeatingCharFinder implements NonRepeatingCharFinder {
 	@Override
