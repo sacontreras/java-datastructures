@@ -1,5 +1,7 @@
 package com.sacontreras.library.algorithms.interview;
 
+import com.sacontreras.library.algorithms.math.MathUtil;
+
 public class Fibonacci {
 	public static void main(String[] args) {
 		int indexes[] = {0, 1, 2, 8, 13};

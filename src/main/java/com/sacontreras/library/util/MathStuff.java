@@ -17,10 +17,6 @@ public class MathStuff {
         return m_this;
     }
 
-	public double log_b(int n, int b) {
-	    return (Math.log(n) / Math.log(b));
-	}
-
 	public int randomIntVal(int min, int max) {
 	    return rand.nextInt((max - min) + 1) + min;
     }

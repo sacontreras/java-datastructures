@@ -1,6 +1,7 @@
 package com.sacontreras.library.datastructures.array;
 
 import com.sacontreras.library.BoxedType;
+import com.sacontreras.library.algorithms.math.MathUtil;
 import com.sacontreras.library.util.Generics;
 import com.sacontreras.library.util.MathStuff;
 
@@ -43,7 +44,7 @@ public class CResizableArray<TData> {
     		newCapacity = DEFAULT_CAPACITY;
     	else {
     		//get smallest DEFAULT_CAPACITY * 2^n > basis; we must solve for n, then add 1; log2(DEFAULT_CAPACITY * 2^n) > log2 (basis) --> log2 (DEFAULT_CAPACITY) + log2 (2^n) > log2 (basis) --> n > log2 (basis) - log2 (DEFAULT_CAPACITY)
-    		int timesResized = (int)(MathStuff.getInstance().log_b(basis, 2) - MathStuff.getInstance().log_b(DEFAULT_CAPACITY, 2));
+    		int timesResized = (int)(MathUtil.log_b(basis, 2) - MathUtil.log_b(DEFAULT_CAPACITY, 2));
     		newCapacity = DEFAULT_CAPACITY * (int)Math.pow(2, timesResized + 1);
     	}
         //System.out.printf("CResizableArray::resize: allocating new_backing_array with capacity: %d\n", new_capacity);

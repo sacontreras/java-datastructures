@@ -2,6 +2,7 @@ package com.sacontreras.library.datastructures.hashtable;
 
 import com.sacontreras.library.BoxedType;
 import com.sacontreras.library.CKeyValuePair;
+import com.sacontreras.library.algorithms.math.MathUtil;
 import com.sacontreras.library.datastructures.linkedlist.CLinkedList;
 import com.sacontreras.library.datastructures.linkedlist.LinkedListException;
 import com.sacontreras.library.util.Generics;
@@ -84,7 +85,7 @@ public class CChainedHashTable<TKey, TValue> extends CHashTable<TKey, TValue, Ch
             new_capacity = DEFAULT_CAPACITY;
         else {
             //get smallest DEFAULT_CAPACITY * 2^n > basis; we must solve for n, then add 1; log2(DEFAULT_CAPACITY * 2^n) > log2 (basis) --> log2 (DEFAULT_CAPACITY) + log2 (2^n) > log2 (basis) --> n > log2 (basis) - log2 (DEFAULT_CAPACITY)
-            int times_resized = (int)(MathStuff.getInstance().log_b(basis, 2) - MathStuff.getInstance().log_b(DEFAULT_CAPACITY, 2));
+            int times_resized = (int)(MathUtil.log_b(basis, 2) - MathUtil.log_b(DEFAULT_CAPACITY, 2));
             //System.out.println(String.format("CChainedHashTable::rehash: times_resized==%d", times_resized));
             new_capacity = DEFAULT_CAPACITY * (int)Math.pow(2, times_resized + 1);
         }
