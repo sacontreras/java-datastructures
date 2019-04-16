@@ -8,12 +8,6 @@ import com.sacontreras.library.datastructures.stack.CStackUnderflowException;
 
 final public class StringUtils {
 		
-		final public static String bitwise_swap_chars(final String str) {
-			char[] c_str = str.toCharArray();
-			Bitwise.bitwise_swap(c_str);
-			return new StringBuilder().append(c_str).toString();
-		}
-
 		final public static CArrayStack<Character> to_CArrayStack(final String str) {
 			CArrayStack<Character> char_stack = null;
 			try {
