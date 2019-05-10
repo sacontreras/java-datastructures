@@ -85,7 +85,7 @@ public class TestCharacterCombinationFinder {
 
 		@Override
 		public void OnCharacterCombinationFound(String string, String combination) {
-			System.out.printf("\"%s\" combination found: \"%s\"\n", string, combination);
+			//System.out.printf("\"%s\" combination found: \"%s\"\n", string, combination);
 			TreeSet<String> combinations = stringCombinationsMap.get(string);
 			if (combinations == null) {
 				combinations = new TreeSet<>();
